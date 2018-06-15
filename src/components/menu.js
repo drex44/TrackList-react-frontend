@@ -1,0 +1,57 @@
+import React, { Component } from 'react';
+
+import 'semantic-ui-css/semantic.min.css';
+import { Segment, Menu, Input, Button, Icon, Label, Dropdown } from 'semantic-ui-react';
+
+export class MainMenu extends Component {
+    state = { activeItem: 'home' }
+  
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  
+    render() {
+      const { activeItem } = this.state;
+  
+      return (
+        <Segment inverted>
+          <Menu inverted pointing secondary size='huge' attached='top'>
+            <Menu.Item name='logo' active={activeItem === 'logo'} onClick={this.handleItemClick} />
+            <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+            <Menu.Item
+              name='notifications'
+              active={activeItem === 'notifications'}
+              onClick={this.handleItemClick}>
+            Notifications <Label color='teal'>1</Label>
+            </Menu.Item>
+            <Menu.Item>
+              <Input className='icon' icon='search' placeholder='Search...' />
+            </Menu.Item>
+            <Menu.Item name='new list' active={activeItem === 'new list'} onClick={this.handleItemClick} >
+              <Button fluid basic inverted animated='fade' >
+                <Button.Content hidden>New List</Button.Content>
+                <Button.Content visible>
+                  <Icon name='plus' />
+                </Button.Content>
+              </Button>
+            </Menu.Item>
+          
+          <Menu.Menu position='right'>
+            <Menu.Item
+              name='my lists'
+              active={activeItem === 'my lists'}
+              onClick={this.handleItemClick}
+            />
+          <Dropdown text='Profile' pointing className='link item'>
+            <Dropdown.Menu>
+              <Dropdown.Item>Profile</Dropdown.Item>
+              <Dropdown.Item>Settings</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Header>Other</Dropdown.Header>
+              <Dropdown.Item>Logout</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          </Menu.Menu>
+          </Menu>
+        </Segment>
+      )
+    }
+  }
