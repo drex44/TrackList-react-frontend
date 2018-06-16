@@ -8,7 +8,7 @@ export class CList extends Component{
     constructor(props){
       super(props);
       this.state = {
-        items : props.tasks
+        tasks : props.list.tasks
       }
 
       this.handleTasksChange = this.handleTasksChange.bind(this);
@@ -19,7 +19,7 @@ export class CList extends Component{
       console.log('CList');
       console.log(event);
 
-      let items = this.state.items.map( (task) => {if (task.id === event.id){
+      let tasks = this.state.tasks.map( (task) => {if (task.id === event.id){
         task.status = event.value;
         return task;
       } else {
@@ -27,7 +27,7 @@ export class CList extends Component{
       }}) ;
 
       this.setState({
-        items : items
+        tasks : tasks
       });
     }
 
@@ -37,33 +37,35 @@ export class CList extends Component{
       console.log(event);
 
       let newTask = {
-        id : this.state.items.length+1,
+        id : this.state.tasks.length+1,
         title : event.title,
-        desc : event.desc,
+        description : event.desc,
         status : false
       }
 
-    let newArray = this.state.items.slice();    
+    let newArray = this.state.tasks.slice();    
     newArray.push(newTask);   
-    this.setState({items:newArray})
+    this.setState({tasks:newArray})
 
     }
 
     render(){
+
+      const list = this.props.list;
       
-      const items = this.state.items;
-      const totalItems = items.length;
+      const tasks = this.state.tasks;
+      const totaltasks = tasks.length;
       let count = 0;
-      items.map( (task)=> task.status?count++:count );
+      tasks.map( (task)=> task.status?count++:count );
       const completedTasks = count;
 
       return (
         <div>
           <Grid>
             <Grid.Column width={14}>
-              <Title size='medium' value="Guide to web development"/>
-              <Description value="steps you should follow while developing website"/>
-              <Tags value={['web', 'website']}/>
+              <Title size='medium' value={list.title}/>
+              <Description value={list.description} />
+              <Tags value={list.tags}/>
               <Flag name='ae' />
             </Grid.Column>
             <Grid.Column width={2}>
@@ -72,10 +74,10 @@ export class CList extends Component{
           </Grid>
           <Divider section />
 
-          <Tasks newTaskLabel='Add new task' tasks={items} handleTasksChange={this.handleTasksChange} handleNewTaskRequest={this.handleNewTaskRequest} />
+          <Tasks newTaskLabel='Add new task' tasks={tasks} handleTasksChange={this.handleTasksChange} handleNewTaskRequest={this.handleNewTaskRequest} />
 
           <Divider hidden />
-          <ProgressBar value={completedTasks} total={totalItems} />
+          <ProgressBar value={completedTasks} total={totaltasks} />
           </div>
       );
     }
@@ -132,7 +134,7 @@ export class CList extends Component{
     render(){
       const status = this.state.status;
       const title = this.props.task.title;
-      const desc = this.props.task.desc;
+      const desc = this.props.task.description;
 
       return (
         <Grid>
