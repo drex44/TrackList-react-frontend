@@ -59,17 +59,16 @@ export class CList extends Component{
 
       return (
         <div>
-            <Grid>
-          <Grid.Column width={14}>
-          <Grid.Row>
-          <Grid.Column ><Flag name='ae' /></Grid.Column> <Grid.Column><Title size='medium' value="Guide to web development"/></Grid.Column>
-          </Grid.Row>
-          <Description value="steps you should follow while developing website"/>
-          <Tags value={['web', 'website']}/>
-          </Grid.Column>
-          <Grid.Column width={2}>
-          <Button floated='right' icon='edit' iconPosition='right' content='Edit' />
-          </Grid.Column>
+          <Grid>
+            <Grid.Column width={14}>
+              <Title size='medium' value="Guide to web development"/>
+              <Description value="steps you should follow while developing website"/>
+              <Tags value={['web', 'website']}/>
+              <Flag name='ae' />
+            </Grid.Column>
+            <Grid.Column width={2}>
+              <Button floated='right' icon='edit' iconPosition='right' content='Edit' />
+            </Grid.Column>
           </Grid>
           <Divider section />
 

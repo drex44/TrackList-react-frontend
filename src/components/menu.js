@@ -13,7 +13,7 @@ export class MainMenu extends Component {
   
       return (
         <Segment inverted>
-          <Menu inverted pointing secondary size='huge' attached='top'>
+          <Menu stackable inverted pointing secondary size='huge' attached='top'>
             <Menu.Item name='logo' active={activeItem === 'logo'} onClick={this.handleItemClick} />
             <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
             <Menu.Item
