@@ -1,27 +1,24 @@
-import API from './api';
+import API, { Services } from './api';
 
-export async function GetAllTasks(props){
-    
-    const response = await API.post('getAllCList')
-        .then(res => {
-          console.log(res);
-          return res.data;
-        })
-
-    return response;
-    
-}
 export async function GetAllCList(props){
     
-    const response = await API.post('getAllCList')
+    const response = await API.post(Services.getAllLists)
         .then(res => {
-          props.setState({
+            props.setState({
             clists:res.data
           });
-          console.log(props.state);
           return res.data;
         })
 
     return response;
-    
+
+}
+
+export async function createNewList(list){
+
+    const response = await API.post(Services.createNewList, list)
+        .then( res => {
+            return res.data;
+        })
+
 }
