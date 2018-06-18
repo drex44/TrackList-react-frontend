@@ -12,7 +12,7 @@ export class RouterBody extends Component {
         return (
             <Switch>
             <Route exact path="/" render={(props) => (<Home clists = {this.props.clists} /> )}/>
-            <Route path="/newList" component={NewList} />
+            <Route path="/newList" render={(props) => (<NewList handleAddNewListSubmit={this.props.handleAddNewListSubmit} /> )}/>
             </Switch>
         );
     }

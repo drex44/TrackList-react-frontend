@@ -1,4 +1,6 @@
 react{
-    semantic-ui-react
+    semantic-ui-react,
+    react-router-dom,
+    axios
 }
 storybook

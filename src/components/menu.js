@@ -17,12 +17,12 @@ export class MainMenu extends Component {
           <Menu stackable inverted pointing secondary size='huge' attached='top'>
             <Menu.Item name='logo' active={activeItem === 'logo'} onClick={this.handleItemClick} > <Link to="/">{'Logo'}</Link> </Menu.Item>
             <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} > <Link to="/">{'Home'}</Link> </Menu.Item>
-            <Menu.Item
+            {/* <Menu.Item
               name='notifications'
               active={activeItem === 'notifications'}
               onClick={this.handleItemClick}>
-            Notifications <Label color='teal'>1</Label>
-            </Menu.Item>
+              Notifications <Label color='teal'>1</Label>
+            </Menu.Item> */}
             <Menu.Item>
               <Input className='icon' icon='search' placeholder='Search...' />
             </Menu.Item>
@@ -43,7 +43,7 @@ export class MainMenu extends Component {
               active={activeItem === 'my lists'}
               onClick={this.handleItemClick}
             />
-          <Dropdown text='Profile' pointing className='link item'>
+          {/* <Dropdown text='Profile' pointing className='link item'>
             <Dropdown.Menu>
               <Dropdown.Item>Profile</Dropdown.Item>
               <Dropdown.Item>Settings</Dropdown.Item>
@@ -51,7 +51,7 @@ export class MainMenu extends Component {
               <Dropdown.Header>Other</Dropdown.Header>
               <Dropdown.Item>Logout</Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
           </Menu.Menu>
           </Menu>
         </Segment>

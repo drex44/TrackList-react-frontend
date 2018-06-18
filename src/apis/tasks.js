@@ -1,6 +1,6 @@
 import API, { Services } from './api';
 
-export async function GetAllCList(props){
+export async function getAllCList(props){
     
     const response = await API.post(Services.getAllLists)
         .then(res => {
@@ -15,10 +15,12 @@ export async function GetAllCList(props){
 }
 
 export async function createNewList(list){
+    
+    list.tasks.map ((task) => delete(task.id));
 
     const response = await API.post(Services.createNewList, list)
         .then( res => {
             return res.data;
         })
-
+    return response;
 }

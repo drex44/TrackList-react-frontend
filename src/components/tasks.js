@@ -150,10 +150,6 @@ export class CList extends Component{
   
 class Tasks extends Component {
 
-  constructor(props){
-    super(props);
-  }
-
   render(){
     const tasks = this.props.tasks;
     return (
@@ -312,7 +308,7 @@ export class ListForm extends Component{
       let newTask = {
         id : this.state.tasks.length+1,
         title : event.title,
-        desc : event.desc,
+        description : event.desc,
         status : false
       }
 
@@ -325,13 +321,24 @@ export class ListForm extends Component{
   handleInputChange(event){
     const target = event.target;
     const name = target.name;
-    const value = target.value;
+    let value = target.value;
+    if(name === "tags"){
+      value = value.split(",");
+    }
 
     this.setState({[name] : value });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     console.log('submit');
+    const list = {
+      title : this.state.title,
+      description : this.state.desc,
+      tags : this.state.tags,
+      tasks : this.state.tasks
+    }
+    let res = await this.props.handleAddNewListSubmit(list);
+    console.log(res);
     event.preventDefault();
   }
 
@@ -349,13 +356,9 @@ export class ListForm extends Component{
   render(){
 
     const tasks = this.state.tasks;
-    const totalTasks = tasks.length;
-    let count = 0;
-    tasks.map( (task)=> task.status?count++:count );
-    const completedTasks = count;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form>
         <PreventEnterSubmit>
           <Form.Field> <label>Title</label> <input name='title' placeholder='Title' onChange={this.handleInputChange} /> </Form.Field>
           <Form.Field name='desc' control={TextArea} label='Description' placeholder='Tell us more about the list...' onChange={this.handleInputChange} />
@@ -368,7 +371,7 @@ export class ListForm extends Component{
         </PreventEnterSubmit>
 
         <Button negative icon='repeat' labelPosition='right' content='Clear' onClick={this.handleReset} />
-        <Button positive icon='checkmark' labelPosition='right' type='submit' content='Submit'/>
+        <Button positive icon='checkmark' labelPosition='right' type='submit' content='Submit' onClick={this.handleSubmit} />
 
       </Form>
     );

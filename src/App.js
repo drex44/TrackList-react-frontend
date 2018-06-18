@@ -2,15 +2,11 @@ import React, { Component } from 'react';
 import './App.css';
 
 import 'semantic-ui-css/semantic.min.css';
-import { Header, Container, Grid, Segment } from 'semantic-ui-react';
 
-import { BrowserRouter, Route } from 'react-router-dom';
-
-import { CList, ListForm } from './components/tasks';
 import { MainMenu } from './components/menu';
 import { RouterBody } from './components/router';
 
-import { GetAllTasks, getAllCList, GetAllCList } from './apis/tasks';
+import { getAllCList, createNewList } from './apis/tasks';
 
 
 class App extends Component {
@@ -19,11 +15,17 @@ class App extends Component {
     this.state = {
       clists : []
     }
+
+    this.handleAddNewListSubmit = this.handleAddNewListSubmit.bind(this);
   }
 
   async componentDidMount() {
-    let clists =await GetAllCList(this);
-    console.log(clists);
+    await getAllCList(this);
+  }
+
+  async handleAddNewListSubmit(list){
+    let res = await createNewList(list);
+    return res;
   }
 
   render() {
@@ -33,7 +35,7 @@ class App extends Component {
       <div className="App">
       
       <MainMenu />
-      <RouterBody clists={clists} />
+      <RouterBody clists={clists} handleAddNewListSubmit={this.handleAddNewListSubmit}/>
         
       </div>
     );
