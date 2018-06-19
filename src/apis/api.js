@@ -6,5 +6,8 @@ export default axios.create({
 
 export var Services = {
   createNewList : 'createCList',
-  getAllLists : 'getAllCList'
+  editList : 'updateCList',
+  getAllLists : 'getAllCList',
+  getListById : 'getCListById',
+  deleteList : 'deleteCList'
 }

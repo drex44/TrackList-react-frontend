@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import 'semantic-ui-css/semantic.min.css';
-import { Segment, Menu, Input, Button, Icon, Label, Dropdown } from 'semantic-ui-react';
+import { Segment, Menu, Input, Button, Icon, Label, Dropdown, Responsive, Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 export class MainMenu extends Component {
@@ -14,18 +14,23 @@ export class MainMenu extends Component {
   
       return (
         <Segment inverted>
-          <Menu stackable inverted pointing secondary size='huge' attached='top'>
-            <Menu.Item name='logo' active={activeItem === 'logo'} onClick={this.handleItemClick} > <Link to="/">{'Logo'}</Link> </Menu.Item>
-            <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} > <Link to="/">{'Home'}</Link> </Menu.Item>
-            {/* <Menu.Item
+        <Grid centered>
+        <Responsive {...Responsive.onlyComputer}>
+          <Menu compact inverted fluid size='huge' attached='top'>
+            <Menu.Item name='logo' active={activeItem === 'logo'} onClick={this.handleItemClick} > 
+              <Link to="/"> <Icon name='check circle outline' size='big' color='teal' /> </Link> 
+            </Menu.Item>
+            <Menu.Item
               name='notifications'
               active={activeItem === 'notifications'}
               onClick={this.handleItemClick}>
               Notifications <Label color='teal'>1</Label>
-            </Menu.Item> */}
+            </Menu.Item>
+
             <Menu.Item>
               <Input className='icon' icon='search' placeholder='Search...' />
             </Menu.Item>
+
             <Menu.Item name='new list' active={activeItem === 'new list'} onClick={this.handleItemClick} >
               <Link to="/newList">
               <Button fluid basic inverted animated='fade' >
@@ -36,14 +41,13 @@ export class MainMenu extends Component {
               </Button>
               </Link>
             </Menu.Item>
-          
           <Menu.Menu position='right'>
             <Menu.Item
               name='my lists'
               active={activeItem === 'my lists'}
               onClick={this.handleItemClick}
             />
-          {/* <Dropdown text='Profile' pointing className='link item'>
+          <Dropdown text='Profile' pointing className='link item'>
             <Dropdown.Menu>
               <Dropdown.Item>Profile</Dropdown.Item>
               <Dropdown.Item>Settings</Dropdown.Item>
@@ -51,9 +55,11 @@ export class MainMenu extends Component {
               <Dropdown.Header>Other</Dropdown.Header>
               <Dropdown.Item>Logout</Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown> */}
+          </Dropdown>
           </Menu.Menu>
           </Menu>
+            </Responsive>
+          </Grid>
         </Segment>
       )
     }

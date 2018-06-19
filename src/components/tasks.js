@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import 'semantic-ui-css/semantic.min.css';
 import { Header, Checkbox, Grid, Segment, Progress, Divider, Button, Icon, Modal, Form, TextArea, Flag } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 
 export class CList extends Component{
@@ -16,9 +17,6 @@ export class CList extends Component{
     }
 
     handleTasksChange(event){
-      console.log('CList');
-      console.log(event);
-
       let tasks = this.state.tasks.map( (task) => {if (task.id === event.id){
         task.status = event.value;
         return task;
@@ -33,9 +31,6 @@ export class CList extends Component{
 
     handleNewTaskRequest(event){
       
-      console.log('CList');
-      console.log(event);
-
       let newTask = {
         id : this.state.tasks.length+1,
         title : event.title,
@@ -69,7 +64,8 @@ export class CList extends Component{
               <Flag name='ae' />
             </Grid.Column>
             <Grid.Column width={2}>
-              <Button floated='right' icon='edit' iconPosition='right' content='Edit' />
+              <Link to={{pathname:'/editList/'+ list.id }}  > <Button basic floated='right' icon='edit' iconPosition='right' content='Edit' /> </Link>
+              <Button basic floated='right' icon='delete' iconPosition='right' content='Delete' onClick={() => this.props.handleDeleteList(list.id) } />
             </Grid.Column>
           </Grid>
           <Divider section />
@@ -117,32 +113,37 @@ export class CList extends Component{
       }
 
       this.handleInputChange = this.handleInputChange.bind(this);
+      this.handleEditTask = this.handleEditTask.bind(this);
+      this.handleDeleteTask = this.handleDeleteTask.bind(this);
     }
 
     handleInputChange(event, data){
       const target = data;
-      const value = target.type === 'checkbox' ? target.checked : target.value;
-      const name = target.name;
-
-      this.setState({
-        [name]: value
-      });
-
       this.props.handleTasksChange({action: 'updateStatus', id:this.state.id, value: target.checked});
+    }
+    handleEditTask(event){
+      this.props.handleTasksChange({action: 'editTask', id:this.state.id, value: event});
+    }
+    handleDeleteTask(event){
+      this.props.handleDeleteTask({action: 'deleteTask', id:this.state.id});
     }
 
     render(){
-      const status = this.state.status;
+      const status = this.props.task.status;
       const title = this.props.task.title;
       const desc = this.props.task.description;
 
       return (
         <Grid>
           <Grid.Column width={1}><Checkbox type='checkbox' name='status' checked={status} onChange={this.handleInputChange} /></Grid.Column> 
-          <Grid.Column  width={13}>
+          <Grid.Column width={10}>
             <Title size='small' value={title}/>
             <Description value={desc}/>
           </Grid.Column>
+          {this.props.editable? <Grid.Column >
+            <NewTaskModal submitLabel='Submit' handleTaskSubmit={this.handleEditTask} task={this.props.task} button={<Button basic icon='edit' />} label='Edit' />
+            <Button basic icon='delete' onClick={this.handleDeleteTask} />
+          </Grid.Column> : null}
         </Grid>
       );
     }
@@ -157,13 +158,13 @@ class Tasks extends Component {
           {tasks.map((task)=>
             <Grid.Column  key={task.id.toString()} >
               <Segment color='green'>
-                <Task task={task} handleTasksChange={this.props.handleTasksChange}/>
+                <Task editable={this.props.editable} task={task} handleDeleteTask={this.props.handleDeleteTask} handleTasksChange={this.props.handleTasksChange} />
               </Segment>
             </Grid.Column>
           )}
             <Grid.Column>
               <Segment>
-                <NewTaskModal label={this.props.newTaskLabel} handleNewTaskRequest={this.props.handleNewTaskRequest} />
+                <NewTaskModal submitLabel='Add' label={this.props.newTaskLabel} handleTaskSubmit={this.props.handleNewTaskRequest} />
               </Segment>
             </Grid.Column>
         </Grid>
@@ -180,7 +181,7 @@ class NewTaskModal extends Component{
 
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
-    this.handleNewTaskRequest = this.handleNewTaskRequest.bind(this);
+    this.handleTaskSubmit = this.handleTaskSubmit.bind(this);
 
   }
 
@@ -196,13 +197,13 @@ class NewTaskModal extends Component{
     });
   }
 
-  handleNewTaskRequest(event){
-    this.props.handleNewTaskRequest(event);
+  handleTaskSubmit(event){
+    this.props.handleTaskSubmit(event);
     this.close();
   }
 
   render(){
-    const button = <Button fluid animated='fade' onClick={this.open} >
+    const button = this.props.button? <div onClick={this.open}> {this.props.button} </div> : <Button basic fluid animated='fade' onClick={this.open} >
                       <Button.Content hidden>{this.props.label}</Button.Content>
                       <Button.Content visible>
                         <Icon name='plus' />
@@ -220,7 +221,7 @@ class NewTaskModal extends Component{
         <Modal.Header>Add new task</Modal.Header>
         <Modal.Content>
           <Modal.Description>
-            <TaskForm handleNewTaskRequest={this.handleNewTaskRequest}/>
+            <TaskForm submitLabel={this.props.submitLabel} task={this.props.task} handleTaskSubmit={this.handleTaskSubmit}/>
           </Modal.Description>
         </Modal.Content>
       </Modal>
@@ -232,9 +233,10 @@ class NewTaskModal extends Component{
 class TaskForm extends Component{
   constructor(props){
     super(props);
+    const task = this.props.task;
     this.state = {
-      title : '',
-      desc : ''
+      title : task?task.title:'',
+      desc : task?task.description:''
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -251,18 +253,21 @@ class TaskForm extends Component{
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.handleNewTaskRequest(this.state);
+    this.props.handleTaskSubmit(this.state);
   }
   
   render(){
+    const title = this.state.title;
+    const desc = this.state.desc;
+
     return (
       <Form onSubmit={this.handleSubmit} >
         <Form.Field>
           <label>Title</label>
-          <input name='title' placeholder='Title' onChange={this.handleInputChange} />
+          <input name='title' value={title} placeholder='Title' onChange={this.handleInputChange} />
         </Form.Field>
-        <Form.Field control={TextArea} name='desc' label='Description' placeholder='Tell us more about the task...' onChange={this.handleInputChange} />
-        <Button positive icon='checkmark' labelPosition='right' content='Add' />
+        <Form.Field control={TextArea} value={desc} name='desc' label='Description' placeholder='Tell us more about the task...' onChange={this.handleInputChange} />
+        <Button positive icon='checkmark' labelPosition='right' content={this.props.submitLabel} />
       </Form>
     );
   }
@@ -270,6 +275,7 @@ class TaskForm extends Component{
 export class ListForm extends Component{
   constructor(props){
     super(props);
+
     this.state = {
       title:'',
       desc:'',
@@ -282,29 +288,68 @@ export class ListForm extends Component{
     this.handleReset = this.handleReset.bind(this);
     this.handleTasksChange = this.handleTasksChange.bind(this);
     this.handleNewTaskRequest = this.handleNewTaskRequest.bind(this);
+    this.handleDeleteTask = this.handleDeleteTask.bind(this);
+  }
+
+  async componentDidMount(){
+    if(this.props.id){
+      const list = await this.props.getListById(this.props.id);
+      this.setState({
+        title:list.title,
+        desc:list.description,
+        tags:list.tags,
+        tasks:list.tasks
+      });
+    }
   }
 
     handleTasksChange(event){
-      console.log('CList');
       console.log(event);
+      if (event.action == "updateStatus"){
+        let tasks = this.state.tasks.map( (task) => {if (task.id === event.id){
+          task.status = event.value;
+          return task;
+        } else {
+          return task;
+        }}) ;
+  
+        this.setState({
+          tasks : tasks
+        });
+      } else if (event.action == "editTask"){
+        let tasks = this.state.tasks.map( (task) => {if (task.id === event.id){
+          task.title = event.value.title;
+          task.description = event.value.desc;
+          return task;
+        } else {
+          return task;
+        }}) ;
+  
+        this.setState({
+          tasks : tasks
+        });
+      } 
+    }
 
-      let tasks = this.state.tasks.map( (task) => {if (task.id === event.id){
-        task.status = event.value;
-        return task;
-      } else {
-        return task;
-      }}) ;
-
-      this.setState({
-        tasks : tasks
-      });
+    handleDeleteTask(event){
+      if (event.action == "deleteTask"){
+        let tasks = this.state.tasks;
+        let index = -1;
+        for(let i=0;i<tasks.length;i++){
+          if(tasks[i].id == event.id){
+            index = i;
+          }
+        }
+        if(index>=0){
+          tasks.splice(index,1);
+        }
+        this.setState({
+          tasks : tasks
+        });
+      } 
     }
 
     handleNewTaskRequest(event){
-      
-      console.log('CList');
-      console.log(event);
-
       let newTask = {
         id : this.state.tasks.length+1,
         title : event.title,
@@ -330,14 +375,15 @@ export class ListForm extends Component{
   }
 
   async handleSubmit(event) {
-    console.log('submit');
+
     const list = {
+      id : this.props.id,
       title : this.state.title,
       description : this.state.desc,
       tags : this.state.tags,
       tasks : this.state.tasks
     }
-    let res = await this.props.handleAddNewListSubmit(list);
+    let res = await this.props.handleListSubmit(list);
     console.log(res);
     event.preventDefault();
   }
@@ -355,20 +401,29 @@ export class ListForm extends Component{
 
   render(){
 
+    const title= this.state.title;
+    const description = this.state.desc;
+    const tags = this.state.tags;
     const tasks = this.state.tasks;
 
     return (
       <Form>
         <PreventEnterSubmit>
-          <Form.Field> <label>Title</label> <input name='title' placeholder='Title' onChange={this.handleInputChange} /> </Form.Field>
-          <Form.Field name='desc' control={TextArea} label='Description' placeholder='Tell us more about the list...' onChange={this.handleInputChange} />
-          <Form.Field> <label>Tags</label> <input name='tags'  icon='tags' iconPosition='left' placeholder='Tags' onChange={this.handleInputChange} /> </Form.Field>
+          <Form.Field> <label>Title</label> <input name='title' value={title} placeholder='Title' onChange={this.handleInputChange} /> </Form.Field>
+          <Form.Field name='desc' control={TextArea} value={description} label='Description' placeholder='Tell us more about the list...' onChange={this.handleInputChange} />
+          <Form.Field> <label>Tags</label> <input name='tags' value={tags} icon='tags' iconPosition='left' placeholder='Tags' onChange={this.handleInputChange} /> </Form.Field>
           <p>* Tags separated by comma (,) </p>
+
+          <Divider hidden />
+
           <Form.Field>
             <label>Tasks</label>
-            <Tasks newTaskLabel='Add new task' tasks={tasks} handleTasksChange={this.handleTasksChange} handleNewTaskRequest={this.handleNewTaskRequest} />
+            <Tasks editable={this.props.editable} newTaskLabel='Add new task' tasks={tasks}
+            handleDeleteTask={this.handleDeleteTask} handleTasksChange={this.handleTasksChange} handleNewTaskRequest={this.handleNewTaskRequest} />
           </Form.Field>
         </PreventEnterSubmit>
+
+        <Divider hidden />
 
         <Button negative icon='repeat' labelPosition='right' content='Clear' onClick={this.handleReset} />
         <Button positive icon='checkmark' labelPosition='right' type='submit' content='Submit' onClick={this.handleSubmit} />
