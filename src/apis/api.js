@@ -1,10 +1,11 @@
 import axios from 'axios';
+import {config} from '../config';
 
 export default axios.create({
-    baseURL: 'http://localhost:4000/'
+    baseURL: config.API_ENDPOINT
   });
 
-export var Services = {
+export const Services = {
   createNewList : 'createCList',
   editList : 'updateCList',
   getAllLists : 'getAllCList',
