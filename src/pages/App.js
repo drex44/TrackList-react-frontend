@@ -3,8 +3,8 @@ import './App.css';
 
 import 'semantic-ui-css/semantic.min.css';
 
-import { MainMenu } from './components/menu';
-import { RouterBody } from './components/router';
+import { MainMenu } from '../components/menu';
+import { RouterBody } from './router';
 
 class App extends Component {
 
