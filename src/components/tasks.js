@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
 import 'semantic-ui-css/semantic.min.css';
-import { Header, Checkbox, Grid, Segment, Progress, Divider, Button, Icon, Modal, Form, TextArea, Flag } from 'semantic-ui-react';
+import { Checkbox, Grid, Segment, Divider, Button, Icon, Modal, Form, TextArea, Flag } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
+import { Description, Title, ProgressBar, PreventEnterSubmit, Tags } from './common';
 
 export class CList extends Component{
     constructor(props){
@@ -77,31 +78,6 @@ export class CList extends Component{
           </div>
       );
     }
-  }
-  
-  function Title(props){
-    return (
-      <Header size={props.size}>{props.value}</Header>
-    );
-  }
-  function Description(props){
-    return (
-      <div> {props.value} </div>
-    );
-  }
-  function Tags(props){
-    return (
-      <div> 
-      {
-        props.value.map((tag)=> <span>#{tag} </span> )
-      }
-    </div>
-    );
-  }
-  function ProgressBar(props){
-    return (
-      <Progress indicating value={props.value} total={props.total} progress='ratio' />
-    );
   }
 
   class Task extends Component{
@@ -275,7 +251,7 @@ class TaskForm extends Component{
 export class ListForm extends Component{
   constructor(props){
     super(props);
-
+    
     this.state = {
       title:'',
       desc:'',
@@ -305,7 +281,7 @@ export class ListForm extends Component{
 
     handleTasksChange(event){
       console.log(event);
-      if (event.action == "updateStatus"){
+      if (event.action === "updateStatus"){
         let tasks = this.state.tasks.map( (task) => {if (task.id === event.id){
           task.status = event.value;
           return task;
@@ -316,7 +292,7 @@ export class ListForm extends Component{
         this.setState({
           tasks : tasks
         });
-      } else if (event.action == "editTask"){
+      } else if (event.action === "editTask"){
         let tasks = this.state.tasks.map( (task) => {if (task.id === event.id){
           task.title = event.value.title;
           task.description = event.value.desc;
@@ -332,11 +308,11 @@ export class ListForm extends Component{
     }
 
     handleDeleteTask(event){
-      if (event.action == "deleteTask"){
+      if (event.action === "deleteTask"){
         let tasks = this.state.tasks;
         let index = -1;
         for(let i=0;i<tasks.length;i++){
-          if(tasks[i].id == event.id){
+          if(tasks[i].id === event.id){
             index = i;
           }
         }
@@ -431,14 +407,4 @@ export class ListForm extends Component{
       </Form>
     );
   }
-}
-
-function PreventEnterSubmit(props){
-  return (
-    <div onKeyPress={e => {
-      if (e.key === 'Enter') e.preventDefault();
-    }} >
-    {props.children}
-    </div>
-  );
 }

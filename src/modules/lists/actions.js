@@ -5,8 +5,14 @@ const createList = (list) => ({
     payload:list
 })
 
-const fetchAllLists = () => ({
-    type:types.FETCH_ALL
+const fetchAllLists = (lists) => ({
+    type:types.FETCH_ALL,
+    payload:lists
+})
+
+const getListById = (list) => ({
+    type:types.GET_LIST_BY_ID,
+    payload:list
 })
 
 const updateList = (list) => ({
@@ -22,6 +28,7 @@ const deleteList = (id) => ({
 export default {
     createList,
     fetchAllLists,
+    getListById,
     updateList,
     deleteList
 }

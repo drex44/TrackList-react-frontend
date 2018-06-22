@@ -2,30 +2,27 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Container, Segment } from 'semantic-ui-react';
 import { CList } from '../components/tasks';
+import { listOperations } from '../modules/lists'
+import { connect } from 'react-redux'
 
-import { getAllCList, deleteList } from '../apis/tasks';
-
-export class Home extends Component {
+class Home extends Component {
+  
   constructor(props){
-    super(props);
-    this.state = {
-      clists : []
-    }
-
+    super(props); 
     this.handleDeleteList = this.handleDeleteList.bind(this);
   }
 
   async componentDidMount() {
-    await getAllCList(this);
+    this.props.getAllCList();
   }
 
   async handleDeleteList(event){
-    const res = await deleteList(event);
-    console.log(res);
+    this.props.deleteList(event);
   }
     render(){
-        const clists = this.state.clists;
-        return (clists.map((list, index)=>
+        
+        const clists = this.props.lists? this.props.lists:[];
+        return (clists.map((list)=>
         <Container>
           <Segment>
             <CList list={list} handleDeleteList={this.handleDeleteList} />
@@ -34,3 +31,21 @@ export class Home extends Component {
         ));
     }
 }
+
+const mapStateToProps = state => {
+  return {
+    lists: state.lists
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllCList: () =>
+      dispatch(listOperations.getAllLists()),
+    deleteList: (id) =>
+      dispatch(listOperations.deleteList(id))
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home)
