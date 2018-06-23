@@ -20,7 +20,7 @@ async handleAddNewListSubmit(list){
     render(){
         return (<Container>
             <Segment>
-              <ListForm handleListSubmit={this.handleAddNewListSubmit} />
+              <ListForm editable={true} handleListSubmit={this.handleAddNewListSubmit} />
             </Segment>
           </Container>);
     }

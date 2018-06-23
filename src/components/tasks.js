@@ -71,7 +71,7 @@ export class CList extends Component{
           </Grid>
           <Divider section />
 
-          <Tasks newTaskLabel='Add new task' tasks={tasks} handleTasksChange={this.handleTasksChange} handleNewTaskRequest={this.handleNewTaskRequest} />
+          <Tasks newTaskLabel='Add new task' editable={this.props.editable} tasks={tasks} handleTasksChange={this.handleTasksChange} handleNewTaskRequest={this.handleNewTaskRequest} />
 
           <Divider hidden />
           <ProgressBar value={completedTasks} total={totaltasks} />
@@ -138,11 +138,13 @@ class Tasks extends Component {
               </Segment>
             </Grid.Column>
           )}
+          {this.props.editable?
             <Grid.Column>
               <Segment>
                 <NewTaskModal submitLabel='Add' label={this.props.newTaskLabel} handleTaskSubmit={this.props.handleNewTaskRequest} />
               </Segment>
             </Grid.Column>
+          :null}
         </Grid>
     );
   }
@@ -267,16 +269,20 @@ export class ListForm extends Component{
     this.handleDeleteTask = this.handleDeleteTask.bind(this);
   }
 
-  async componentDidMount(){
-    if(this.props.id){
-      const list = await this.props.getListById(this.props.id);
-      this.setState({
+  static getDerivedStateFromProps(props, state) {
+    // Any time the current user changes,
+    // Reset any parts of state that are tied to that user.
+    // In this simple example, that's just the email.
+    if (props.list && props.list.title !== state.title) {
+      const list = props.list;
+      return {
         title:list.title,
         desc:list.description,
         tags:list.tags,
         tasks:list.tasks
-      });
+      };
     }
+    return null;
   }
 
     handleTasksChange(event){
@@ -353,7 +359,7 @@ export class ListForm extends Component{
   async handleSubmit(event) {
 
     const list = {
-      id : this.props.id,
+      id : this.props.list.id,
       title : this.state.title,
       description : this.state.desc,
       tags : this.state.tags,

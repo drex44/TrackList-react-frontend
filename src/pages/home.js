@@ -25,7 +25,7 @@ class Home extends Component {
         return (clists.map((list)=>
         <Container>
           <Segment>
-            <CList list={list} handleDeleteList={this.handleDeleteList} />
+            <CList list={list} editable={false} handleDeleteList={this.handleDeleteList} />
           </Segment>
         </Container>
         ));
