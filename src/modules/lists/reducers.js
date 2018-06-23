@@ -5,10 +5,18 @@ const listReducer = (state = defaultState, action) => {
     switch (action.type){
 
         case types.FETCH_ALL:
-        return {lists:action.payload};
+        var lists = action.payload;
+        return Object.assign ({}, state, {lists : lists});
+
+        case types.SEARCH_LISTS:
+        var lists = action.payload?action.payload:[];
+        console.log(lists);
+        return Object.assign ({}, state, {searchResult : lists});
 
         case types.GET_LIST_BY_ID:
-        return setSelectedList(state, action.payload);
+        var newState = {...state};
+        newState.selectedList = action.payload;
+        return newState;
 
         case types.CREATE_LIST:
         var lists = [ ...state.lists ];
@@ -19,7 +27,7 @@ const listReducer = (state = defaultState, action) => {
         var lists = [ ...state.lists];
         var index = findListIndexFromId(lists, action.payload);
         lists.splice(index, 1);
-        return {lists: lists } ;
+        return Object.assign ({}, state, {lists : lists});
 
         case types.UPDATE_LIST:
         var lists = [ ...state.lists ];

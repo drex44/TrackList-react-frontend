@@ -15,6 +15,11 @@ const getListById = (list) => ({
     payload:list
 })
 
+const searchLists = (lists) => ({
+    type:types.SEARCH_LISTS,
+    payload:lists
+})
+
 const updateList = (list) => ({
     type:types.UPDATE_LIST,
     payload:list
@@ -30,5 +35,6 @@ export default {
     fetchAllLists,
     getListById,
     updateList,
-    deleteList
+    deleteList,
+    searchLists
 }

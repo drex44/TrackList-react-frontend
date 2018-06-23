@@ -1,7 +1,8 @@
 import _ from 'lodash';
 
 export const defaultState = {
-    lists : []
+    lists : [],
+    searchResult : []
 }
 
 export const findListIndexFromId = (lists,id) => {
@@ -15,5 +16,6 @@ export const findListFromId = (lists, id) => {
 export const setSelectedList = (state, list) => {
     var newState = _.cloneDeep(state);
     _.set(newState, "selectedList", list);
+    console.log(newState);
     return newState;
 }

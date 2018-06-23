@@ -30,7 +30,7 @@ export class EditList extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
       list: state.selectedList,
     }

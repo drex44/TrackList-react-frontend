@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
 import 'semantic-ui-css/semantic.min.css';
-import { Segment, Menu, Input, Button, Icon, Label, Dropdown, Responsive, Grid } from 'semantic-ui-react';
+import { Segment, Menu, Button, Icon, Label, Dropdown, Responsive, Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+
+import SearchBar from './viewController/searchBar';
 
 export class MainMenu extends Component {
     state = { activeItem: 'home' }
@@ -20,15 +22,15 @@ export class MainMenu extends Component {
             <Menu.Item name='logo' active={activeItem === 'logo'} onClick={this.handleItemClick} > 
               <Link to="/"> <Icon name='check circle outline' size='big' color='teal' /> </Link> 
             </Menu.Item>
-            <Menu.Item
+            {/* <Menu.Item
               name='notifications'
               active={activeItem === 'notifications'}
               onClick={this.handleItemClick}>
               Notifications <Label color='teal'>1</Label>
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item>
-              <Input className='icon' icon='search' placeholder='Search...' />
+              <SearchBar />
             </Menu.Item>
 
             <Menu.Item name='new list' active={activeItem === 'new list'} onClick={this.handleItemClick} >
@@ -41,7 +43,7 @@ export class MainMenu extends Component {
               </Button>
               </Link>
             </Menu.Item>
-          <Menu.Menu position='right'>
+          {/* <Menu.Menu position='right'>
             <Menu.Item
               name='my lists'
               active={activeItem === 'my lists'}
@@ -56,7 +58,7 @@ export class MainMenu extends Component {
               <Dropdown.Item>Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          </Menu.Menu>
+          </Menu.Menu> */}
           </Menu>
             </Responsive>
           </Grid>

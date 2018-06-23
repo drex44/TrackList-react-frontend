@@ -10,5 +10,6 @@ export const Services = {
   editList : 'updateCList',
   getAllLists : 'getAllCList',
   getListById : 'getCListById',
-  deleteList : 'deleteCList'
+  deleteList : 'deleteCList',
+  searchLists : 'search'
 }

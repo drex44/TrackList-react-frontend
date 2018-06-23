@@ -51,10 +51,27 @@ const editList = (list) => {
     }
 }
 
+const searchLists = (text) => {
+    return function (dispatch) {
+        API.post(Services.searchLists, {text:text})
+        .then( res => {
+            dispatch(actions.searchLists(res.data))
+        })
+    }
+}
+
+const clearSearchLists = () => {
+    return function (dispatch) {
+        dispatch(actions.searchLists([]))
+    }
+}
+
 export default {
     editList,
     deleteList,
     createList,
     getAllLists,
-    getListById
+    getListById,
+    searchLists,
+    clearSearchLists
 }
