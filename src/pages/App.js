@@ -5,16 +5,16 @@ import 'semantic-ui-css/semantic.min.css';
 
 import { MainMenu } from '../components/menu';
 import { RouterBody } from './router';
+import { HelmetHead } from '../components/views/helmet';
 
 class App extends Component {
 
   render() {
     return (
       <div className="App">
-      
-      <MainMenu />
-      <RouterBody />
-        
+        <HelmetHead />
+        <MainMenu />
+        <RouterBody />
       </div>
     );
   }

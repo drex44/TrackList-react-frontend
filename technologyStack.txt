@@ -2,6 +2,7 @@ react{
     semantic-ui-react,
     react-router-dom,
     axios,
-    redux
+    redux,
+    react-helmet
 }
 storybook
