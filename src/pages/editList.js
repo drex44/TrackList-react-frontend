@@ -1,49 +1,50 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Container, Segment } from 'semantic-ui-react';
+import { Container, Segment, Header } from 'semantic-ui-react';
 import { ListForm } from '../components/tasks';
 import { listOperations } from '../modules/lists';
 import { connect } from 'react-redux';
 
 export class EditList extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.handleEditListSubmit = this.handleEditListSubmit.bind(this);
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         this.props.fetchList(this.props.match.params.id);
     }
 
-    async handleEditListSubmit(list){
+    async handleEditListSubmit(list) {
         this.props.editList(list);
     }
-    
-    render(){
+
+    render() {
         return (
-        <Container>
-            <Segment>
-                <ListForm editable={true} list={this.props.list} handleListSubmit={this.handleEditListSubmit} />
-            </Segment>
-        </Container>);
+            <Container>
+                <Header> Edit TrackList </Header>
+                <Segment>
+                    <ListForm editable={true} list={this.props.list} handleListSubmit={this.handleEditListSubmit} />
+                </Segment>
+            </Container>);
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-      list: state.selectedList,
+        list: state.selectedList,
     }
-  }
-  const mapDispatchToProps = dispatch => {
+}
+const mapDispatchToProps = dispatch => {
     return {
-      editList: (list) =>
-        dispatch(listOperations.editList(list)),
-      fetchList: (id) =>
-        dispatch(listOperations.getListById(id))
+        editList: (list) =>
+            dispatch(listOperations.editList(list)),
+        fetchList: (id) =>
+            dispatch(listOperations.getListById(id))
     }
-  }
-  export default connect(
+}
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(EditList)
+)(EditList)

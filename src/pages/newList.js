@@ -1,41 +1,44 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Container, Segment } from 'semantic-ui-react';
+import { Container, Segment, Header } from 'semantic-ui-react';
 import { ListForm } from '../components/tasks';
 import { listOperations } from '../modules/lists'
 import { connect } from 'react-redux'
 
 class NewList extends Component {
 
-    constructor(props){
+  constructor(props) {
     super(props);
     this.handleAddNewListSubmit = this.handleAddNewListSubmit.bind(this);
-}
+  }
 
-async handleAddNewListSubmit(list){
+  async handleAddNewListSubmit(list) {
     // let res = await createNewList(list);
-        this.props.createList(list);
-    }
+    this.props.createList(list);
+  }
 
-    render(){
-        return (<Container>
-            <Segment>
-              <ListForm editable={true} handleListSubmit={this.handleAddNewListSubmit} />
-            </Segment>
-          </Container>);
-    }
+  render() {
+    return (
+      <Container>
+        <Header> Create new TrackList </Header>
+        <Segment>
+          <ListForm editable={true} handleListSubmit={this.handleAddNewListSubmit} />
+        </Segment>
+      </Container>
+    );
+  }
 }
 
 const mapStateToProps = state => {
-    return {}
+  return {}
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    createList: (list) =>
+      dispatch(listOperations.createList(list)),
   }
-  const mapDispatchToProps = dispatch => {
-    return {
-      createList: (list) =>
-        dispatch(listOperations.createList(list)),
-    }
-  }
-  export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(NewList)
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewList)

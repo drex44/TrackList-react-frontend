@@ -10,70 +10,70 @@ const resultRenderer = ({ title }) => <Label content={title} />
 
 export class SearchBar extends Component {
     componentWillMount() {
-      this.resetComponent()
+        this.resetComponent()
     }
-  
-    resetComponent = () => this.setState({ isLoading: false, value: '', Redirect: false, id:'' })
-  
+
+    resetComponent = () => this.setState({ isLoading: false, value: '', Redirect: false, id: '' })
+
     handleResultSelect = (e, { result }) => {
-        this.setState({ value: result.title, Redirect: true, id:result.id });
+        this.setState({ value: result.title, Redirect: true, id: result.id });
         this.props.clearSearch();
     }
-  
+
     handleSearchChange = (e, { value }) => {
-      this.setState({ isLoading: true, value })
-  
-      setTimeout(() => {
-        if (this.state.value.length < 1) return this.resetComponent()
-        this.props.search(this.state.value);
-        this.setState({
-          isLoading: false,
-        })
-      }, 300)
+        this.setState({ isLoading: true, value })
+
+        setTimeout(() => {
+            if (this.state.value.length < 1) return this.resetComponent()
+            this.props.search(this.state.value);
+            this.setState({
+                isLoading: false,
+            })
+        }, 300)
     }
-  
+
     render() {
 
-      if(this.state.Redirect){
-        const id = this.state.id;
-        this.resetComponent();
-        return <Redirect push to={{pathname:'/searchResult/'+ id }} />;
-      }
-      const { isLoading, value } = this.state
-  
-      return (
+        if (this.state.Redirect) {
+            const id = this.state.id;
+            this.resetComponent();
+            return <Redirect push to={{ pathname: '/searchResult/' + id }} />;
+        }
+        const { isLoading, value } = this.state
+
+        return (
             <Search
-              loading={isLoading}
-              onResultSelect={this.handleResultSelect}
-              onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
-              results={this.props.searchResult}
-              value={value}
-              resultRenderer={resultRenderer}
-              {...this.props}
+                loading={isLoading}
+                onResultSelect={this.handleResultSelect}
+                onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
+                results={this.props.searchResult}
+                value={value}
+                resultRenderer={resultRenderer}
+                {...this.props}
             />
-      )
+        )
     }
-  }
-  
+}
+
 
 class SearchInput extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            searchText : ''
+            searchText: ''
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleClearText = this.handleClearText.bind(this);
     }
-    handleInputChange(event){
+    handleInputChange(event) {
         const target = event.target;
         const name = target.name;
         const value = target.value;
 
-        this.setState({ [name]:value });
+        this.setState({ [name]: value });
     }
-    handleClearText(event){
-        this.setState({ searchText:'' });
+    handleClearText(event) {
+        this.setState({ searchText: '' });
     }
     handleRef = (c) => {
         this.inputRef = c
@@ -81,13 +81,13 @@ class SearchInput extends Component {
     focus = () => {
         this.inputRef.focus()
     }
-    
-    render(){
+
+    render() {
         return (
-            <Input name='searchText' value={this.state.searchText} labelPosition='left' icon placeholder='Search...'  ref={this.handleRef} onChange={this.handleInputChange} >
-            <Label basic onClick={this.focus}><Icon name='search' link='true' /></Label>
-            <input />
-            <Icon name='delete' link='true' onClick={this.handleClearText} />
+            <Input name='searchText' value={this.state.searchText} labelPosition='left' icon placeholder='Search...' ref={this.handleRef} onChange={this.handleInputChange} >
+                <Label basic onClick={this.focus}><Icon name='search' link='true' /></Label>
+                <input />
+                <Icon name='delete' link='true' onClick={this.handleClearText} />
             </Input>
         );
     }

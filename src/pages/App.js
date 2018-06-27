@@ -5,6 +5,7 @@ import 'semantic-ui-css/semantic.min.css';
 
 import { MainMenu } from '../components/menu';
 import { RouterBody } from './router';
+import { Footer } from './footer';
 import { HelmetHead } from '../components/views/helmet';
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
         <HelmetHead />
         <MainMenu />
         <RouterBody />
+        <Footer />
       </div>
     );
   }

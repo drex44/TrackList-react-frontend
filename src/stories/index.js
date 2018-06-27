@@ -24,31 +24,31 @@ storiesOf('Button', module)
     </Button>
   ));
 
-storiesOf('Menu', module).add('top menu', () => <MainMenu /> );
+storiesOf('Menu', module).add('top menu', () => <MainMenu />);
 storiesOf('CList', module).add('CList', () => <App />);
 
-  class App extends Component {
-    render() {
-      return (
-        <div className="App">
-  
-          <Container>
-            <Segment>
-              <CList tasks={[{id:1 , title:'research1', desc: 'find all the info', status: true}, 
-        {id:2 ,title:'research', desc: 'find all the info', status: true}, 
-        {id:3 ,title:'ask the expert', desc:'contact the expert to get your doubts cleared', status: false}]}/>
-            </Segment>
-          </Container>
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
 
-          <Container>
-            <Segment>
-              <ListForm />
-            </Segment>
-          </Container>
+        <Container>
+          <Segment>
+            <CList tasks={[{ id: 1, title: 'research1', desc: 'find all the info', status: true },
+            { id: 2, title: 'research', desc: 'find all the info', status: true },
+            { id: 3, title: 'ask the expert', desc: 'contact the expert to get your doubts cleared', status: false }]} />
+          </Segment>
+        </Container>
 
-          <MainMenu />
-          
-        </div>
-      );
-    }
+        <Container>
+          <Segment>
+            <ListForm />
+          </Segment>
+        </Container>
+
+        <MainMenu />
+
+      </div>
+    );
   }
+}

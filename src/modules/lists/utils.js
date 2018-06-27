@@ -1,16 +1,16 @@
 import _ from 'lodash';
 
 export const defaultState = {
-    lists : [],
-    searchResult : []
+    lists: [],
+    searchResult: []
 }
 
-export const findListIndexFromId = (lists,id) => {
-    return _.findIndex(lists, {id:id});
+export const findListIndexFromId = (lists, id) => {
+    return _.findIndex(lists, { id: id });
 }
 
 export const findListFromId = (lists, id) => {
-    return _.find(lists, {id:id});
+    return _.find(lists, { id: id });
 }
 
 export const setSelectedList = (state, list) => {

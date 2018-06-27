@@ -7,43 +7,43 @@ import { Link } from 'react-router-dom';
 import SearchBar from './viewController/searchBar';
 
 export class MainMenu extends Component {
-    state = { activeItem: 'home' }
-  
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-  
-    render() {
-      const { activeItem } = this.state;
-  
-      return (
-        <Segment inverted>
+  state = { activeItem: 'home' }
+
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+  render() {
+    const { activeItem } = this.state;
+
+    return (
+      <Segment inverted>
         <Grid centered>
-        <Responsive {...Responsive.onlyComputer}>
-          <Menu compact inverted fluid size='huge' attached='top'>
-            <Menu.Item name='logo' active={activeItem === 'logo'} onClick={this.handleItemClick} > 
-              <Link to="/"> <Icon name='check circle outline' size='big' color='teal' /> </Link> 
-            </Menu.Item>
-            {/* <Menu.Item
+          <Responsive {...Responsive.onlyComputer}>
+            <Menu compact inverted fluid size='huge' attached='top'>
+              <Menu.Item name='logo' active={activeItem === 'logo'} onClick={this.handleItemClick} >
+                <Link to="/"> <Icon name='check circle outline' size='big' color='teal' /> </Link>
+              </Menu.Item>
+              {/* <Menu.Item
               name='notifications'
               active={activeItem === 'notifications'}
               onClick={this.handleItemClick}>
               Notifications <Label color='teal'>1</Label>
             </Menu.Item> */}
 
-            <Menu.Item>
-              <SearchBar />
-            </Menu.Item>
+              <Menu.Item>
+                <SearchBar />
+              </Menu.Item>
 
-            <Menu.Item name='new list' active={activeItem === 'new list'} onClick={this.handleItemClick} >
-              <Link to="/newList">
-              <Button fluid basic inverted animated='fade' >
-                <Button.Content hidden>New List</Button.Content>
-                <Button.Content visible>
-                  <Icon name='plus' />
-                </Button.Content>
-              </Button>
-              </Link>
-            </Menu.Item>
-          {/* <Menu.Menu position='right'>
+              <Menu.Item name='new list' active={activeItem === 'new list'} onClick={this.handleItemClick} >
+                <Link to="/newList">
+                  <Button fluid basic inverted animated='fade' >
+                    <Button.Content hidden>New List</Button.Content>
+                    <Button.Content visible>
+                      <Icon name='plus' />
+                    </Button.Content>
+                  </Button>
+                </Link>
+              </Menu.Item>
+              {/* <Menu.Menu position='right'>
             <Menu.Item
               name='my lists'
               active={activeItem === 'my lists'}
@@ -59,10 +59,10 @@ export class MainMenu extends Component {
             </Dropdown.Menu>
           </Dropdown>
           </Menu.Menu> */}
-          </Menu>
-            </Responsive>
-          </Grid>
-        </Segment>
-      )
-    }
+            </Menu>
+          </Responsive>
+        </Grid>
+      </Segment>
+    )
   }
+}

@@ -6,14 +6,14 @@ import logger from 'redux-logger'
 
 // import * as reducers from "./ducks";
 
-export default function configureStore( initialState ) {
+export default function configureStore(initialState) {
     // const rootReducer = combineReducers( listReducer );
 
-    const store =  createStore(
+    const store = createStore(
         listReducer,
         initialState,
         applyMiddleware(ReduxThunk, logger)
     );
-    
+
     return store;
 }
