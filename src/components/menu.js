@@ -1,26 +1,46 @@
-import React, { Component } from 'react';
+import React, { Component } from "react"
 
-import 'semantic-ui-css/semantic.min.css';
-import { Segment, Menu, Button, Icon, Label, Dropdown, Responsive, Grid } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import "semantic-ui-css/semantic.min.css"
+import {
+  Segment,
+  Menu,
+  Button,
+  Icon,
+  Label,
+  Dropdown,
+  Responsive,
+  Grid
+} from "semantic-ui-react"
+import { Link } from "react-router-dom"
 
-import SearchBar from './viewController/searchBar';
+import SearchBar from "./viewController/searchBar"
 
 export class MainMenu extends Component {
-  state = { activeItem: 'home' }
+  state = { activeItem: "home" }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const { activeItem } = this.state;
+    const { activeItem } = this.state
 
     return (
       <Segment inverted>
         <Grid centered>
           <Responsive {...Responsive.onlyComputer}>
-            <Menu compact inverted fluid size='huge' attached='top'>
-              <Menu.Item name='logo' active={activeItem === 'logo'} onClick={this.handleItemClick} >
-                <Link to="/"> <Icon name='check circle outline' size='big' color='teal' /> </Link>
+            <Menu compact inverted fluid size="huge" attached="top">
+              <Menu.Item
+                name="logo"
+                active={activeItem === "logo"}
+                onClick={this.handleItemClick}
+              >
+                <Link to="/">
+                  {" "}
+                  <Icon
+                    name="check circle outline"
+                    size="big"
+                    color="teal"
+                  />{" "}
+                </Link>
               </Menu.Item>
               {/* <Menu.Item
               name='notifications'
@@ -33,12 +53,16 @@ export class MainMenu extends Component {
                 <SearchBar />
               </Menu.Item>
 
-              <Menu.Item name='new list' active={activeItem === 'new list'} onClick={this.handleItemClick} >
+              <Menu.Item
+                name="new list"
+                active={activeItem === "new list"}
+                onClick={this.handleItemClick}
+              >
                 <Link to="/newList">
-                  <Button fluid basic inverted animated='fade' >
+                  <Button fluid basic inverted animated="fade">
                     <Button.Content hidden>New List</Button.Content>
                     <Button.Content visible>
-                      <Icon name='plus' />
+                      <Icon name="plus" />
                     </Button.Content>
                   </Button>
                 </Link>

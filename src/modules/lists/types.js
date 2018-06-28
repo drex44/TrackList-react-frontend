@@ -6,10 +6,10 @@ const GET_LIST_BY_ID = "lists/GET_LIST_BY_ID";
 const SEARCH_LISTS = "lists/SEARCH_LISTS";
 
 export default {
-    FETCH_ALL,
-    GET_LIST_BY_ID,
-    CREATE_LIST,
-    DELETE_LIST,
-    UPDATE_LIST,
-    SEARCH_LISTS
-}
+  FETCH_ALL,
+  GET_LIST_BY_ID,
+  CREATE_LIST,
+  DELETE_LIST,
+  UPDATE_LIST,
+  SEARCH_LISTS
+};

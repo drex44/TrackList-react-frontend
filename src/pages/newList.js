@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import 'semantic-ui-css/semantic.min.css';
-import { Container, Segment, Header } from 'semantic-ui-react';
-import { ListForm } from '../components/tasks';
-import { listOperations } from '../modules/lists'
-import { connect } from 'react-redux'
+import React, { Component } from "react";
+import "semantic-ui-css/semantic.min.css";
+import { Container, Segment, Header } from "semantic-ui-react";
+import { ListForm } from "../components/tasks";
+import { listOperations } from "../modules/lists";
+import { connect } from "react-redux";
 
 class NewList extends Component {
-
   constructor(props) {
     super(props);
     this.handleAddNewListSubmit = this.handleAddNewListSubmit.bind(this);
@@ -22,7 +21,10 @@ class NewList extends Component {
       <Container>
         <Header> Create new TrackList </Header>
         <Segment>
-          <ListForm editable={true} handleListSubmit={this.handleAddNewListSubmit} />
+          <ListForm
+            editable={true}
+            handleListSubmit={this.handleAddNewListSubmit}
+          />
         </Segment>
       </Container>
     );
@@ -30,15 +32,14 @@ class NewList extends Component {
 }
 
 const mapStateToProps = state => {
-  return {}
-}
+  return {};
+};
 const mapDispatchToProps = dispatch => {
   return {
-    createList: (list) =>
-      dispatch(listOperations.createList(list)),
-  }
-}
+    createList: list => dispatch(listOperations.createList(list))
+  };
+};
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NewList)
+)(NewList);
