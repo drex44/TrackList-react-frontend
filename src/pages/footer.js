@@ -14,10 +14,12 @@ import { Link } from "react-router-dom";
 export class Footer extends Component {
   render() {
     return (
-      <Segment inverted vertical style={{ padding: "5em 0em" }}>
+      <Segment vertical style={{ padding: "5em 0em" }}>
+        <Divider section />
+        <Divider hidden />
         <Container compact centered>
-          <Grid centered inverted stackable>
-            <List horizontal inverted divided link>
+          <Grid centered stackable>
+            <List horizontal divided link>
               <List.Item as="a">
                 <Link to="/about-us"> About us </Link>
               </List.Item>

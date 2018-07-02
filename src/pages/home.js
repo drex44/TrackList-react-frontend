@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Container, Segment } from "semantic-ui-react";
+import { Container, Segment, Divider } from "semantic-ui-react";
 import { CList } from "../components/tasks";
 import { listOperations } from "../modules/lists";
 import { connect } from "react-redux";
@@ -26,9 +26,11 @@ class Home extends Component {
           <CList
             list={list}
             editable={false}
+            isUserList={false}
             handleDeleteList={this.handleDeleteList}
           />
         </Segment>
+        <Divider hidden />
       </Container>
     ));
   }

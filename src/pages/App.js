@@ -13,8 +13,9 @@ class App extends Component {
     return (
       <div className="App">
         <HelmetHead />
-        <MainMenu />
-        <RouterBody />
+        <MainMenu>
+          <RouterBody />
+        </MainMenu>
         <Footer />
       </div>
     );
