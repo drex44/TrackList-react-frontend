@@ -17,7 +17,7 @@ const listReducer = (state = defaultState, action) => {
       return newState;
 
     case types.CREATE_LIST:
-      var lists = [...state.lists];
+      var lists = state.lists ? [...state.lists] : [];
       lists.push(action.payload);
       return Object.assign({}, state, { lists: lists });
 
