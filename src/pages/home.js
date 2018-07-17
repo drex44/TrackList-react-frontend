@@ -4,6 +4,7 @@ import { Container, Segment, Divider } from "semantic-ui-react";
 import { CList } from "../components/tasks";
 import { listOperations } from "../modules/lists";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 class Home extends Component {
   constructor(props) {
@@ -47,7 +48,9 @@ const mapDispatchToProps = dispatch => {
     deleteList: id => dispatch(listOperations.deleteList(id))
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Home)
+);

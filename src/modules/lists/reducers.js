@@ -1,4 +1,5 @@
 import types from "./types";
+import _ from "lodash";
 import { defaultState, findListIndexFromId, setSelectedList } from "./utils";
 
 const listReducer = (state = defaultState, action) => {
@@ -31,7 +32,8 @@ const listReducer = (state = defaultState, action) => {
       var lists = [...state.lists];
       var index = findListIndexFromId(lists, action.payload.id);
       lists[index] = action.payload;
-      return Object.assign({}, state, { lists: lists });
+      var newState = _.cloneDeep(state);
+      return Object.assign({}, newState, { lists: lists });
 
     default:
       return state;

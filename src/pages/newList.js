@@ -4,7 +4,7 @@ import { Container, Segment, Header } from "semantic-ui-react";
 import { ListForm } from "../components/tasks";
 import { listOperations } from "../modules/lists";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class NewList extends Component {
   constructor(props) {
@@ -16,19 +16,13 @@ class NewList extends Component {
   }
 
   async handleAddNewListSubmit(list) {
-    // let res = await createNewList(list);
     this.props.createList(list);
-    this.setState({ Redirect: true, id: list.id });
+    this.props.history.push("/");
   }
 
   resetComponent = () => this.setState({ Redirect: false, id: "" });
 
   render() {
-    if (this.state.Redirect) {
-      const id = this.state.id;
-      this.resetComponent();
-      return <Redirect push to={{ pathname: "/" }} />;
-    }
     return (
       <Container>
         <Header> Create new TrackList </Header>
@@ -51,7 +45,9 @@ const mapDispatchToProps = dispatch => {
     createList: list => dispatch(listOperations.createList(list))
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewList);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(NewList)
+);

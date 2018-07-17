@@ -83,14 +83,13 @@ export class CList extends Component {
           </Grid.Column>
           <Grid.Column width={2}>
             <Link to={{ pathname: "/editList/" + list.id }}>
-              {" "}
               <Button
                 basic
                 floated="right"
                 icon="edit"
                 iconPosition="right"
                 content="Edit"
-              />{" "}
+              />
             </Link>
             {/* <Button
               basic
@@ -100,7 +99,9 @@ export class CList extends Component {
               content="Delete"
               onClick={() => this.props.handleDeleteList(list.id)}
             /> */}
-            <ConfirmationModal
+
+            {/* delete clist */}
+            {/* <ConfirmationModal
               button={
                 <Button
                   basic
@@ -114,7 +115,7 @@ export class CList extends Component {
               message="are you sure, you want to delete this TrackList?"
               action={this.props.handleDeleteList}
               value={list.id}
-            />
+            /> */}
           </Grid.Column>
         </Grid>
         <Divider section />
@@ -387,7 +388,7 @@ export class ListForm extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.list && !state.title) {
+    if (props.list && props.list.tags && !state.title) {
       const list = props.list;
       return {
         title: list.title,

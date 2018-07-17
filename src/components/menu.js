@@ -70,6 +70,7 @@ export class MainMenu extends Component {
           name="home"
           active={activeItem === "home"}
           onClick={this.handleItemClick}
+          as="p"
         >
           <Link to="/">
             <Icon name="check circle outline" size="big" color="teal" />

@@ -17,6 +17,12 @@ const getListById = id => {
   };
 };
 
+const clearSelectedList = () => {
+  return function(dispatch) {
+    dispatch(actions.getListById({}));
+  };
+};
+
 const createList = list => {
   list.tasks.map(task => delete task.id);
   return function(dispatch) {
@@ -68,5 +74,6 @@ export default {
   getAllLists,
   getListById,
   searchLists,
-  clearSearchLists
+  clearSearchLists,
+  clearSelectedList
 };

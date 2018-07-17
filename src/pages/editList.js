@@ -4,7 +4,7 @@ import { Container, Segment, Header } from "semantic-ui-react";
 import { ListForm } from "../components/tasks";
 import { listOperations } from "../modules/lists";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 export class EditList extends Component {
   constructor(props) {
@@ -16,22 +16,18 @@ export class EditList extends Component {
   }
 
   async componentDidMount() {
+    this.props.clearSelectedList();
     this.props.fetchList(this.props.match.params.id);
   }
 
   async handleEditListSubmit(list) {
     this.props.editList(list);
-    this.setState({ Redirect: true, id: list.id });
+    this.props.history.push("/");
   }
 
   resetComponent = () => this.setState({ Redirect: false, id: "" });
 
   render() {
-    if (this.state.Redirect) {
-      const id = this.state.id;
-      this.resetComponent();
-      return <Redirect push to={{ pathname: "/" }} />;
-    }
     return (
       <Container>
         <Header> Edit TrackList </Header>
@@ -55,10 +51,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     editList: list => dispatch(listOperations.editList(list)),
-    fetchList: id => dispatch(listOperations.getListById(id))
+    fetchList: id => dispatch(listOperations.getListById(id)),
+    clearSelectedList: () => dispatch(listOperations.clearSelectedList())
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EditList);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(EditList)
+);
