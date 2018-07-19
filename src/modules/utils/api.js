@@ -6,10 +6,20 @@ export const API = axios.create({
 });
 
 export const Services = {
-  createNewList: "createCList",
-  editList: "updateCList",
-  getAllLists: "getAllCList",
-  getListById: "getCListById",
-  deleteList: "deleteCList",
-  searchLists: "search"
+  createNewList: "createList",
+  editList: "updateList",
+  getAllPublicList: "getAllPublicList",
+  getListById: "getListById",
+  deleteList: "deleteList",
+  searchLists: "search",
+  authenticate: "authenticate",
+  getAllPrivateLists: "getAllPrivateLists"
+};
+
+export const prepareHeaders = sessionToken => {
+  let headers = {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + sessionToken
+  };
+  return headers;
 };

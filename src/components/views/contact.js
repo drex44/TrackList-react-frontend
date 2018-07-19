@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, List, Header, Icon } from "semantic-ui-react";
+import { Container, List } from "semantic-ui-react";
 import { StyledIcon } from "../common";
 
 export function ContactUs(props) {

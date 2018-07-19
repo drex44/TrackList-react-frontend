@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import "semantic-ui-css/semantic.min.css";
-import { Header, Progress, Icon, Button, Confirm } from "semantic-ui-react";
+import { Header, Progress, Icon, Confirm } from "semantic-ui-react";
 
 export function Title(props) {
   return <Header size={props.size}>{props.value}</Header>;

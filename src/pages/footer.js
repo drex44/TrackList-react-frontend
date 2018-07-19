@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 
 import "semantic-ui-css/semantic.min.css";
-import {
-  Container,
-  Segment,
-  Grid,
-  List,
-  Header,
-  Divider
-} from "semantic-ui-react";
+import { Container, Segment, Grid, List, Divider } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 export class Footer extends Component {

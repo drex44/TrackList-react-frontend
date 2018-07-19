@@ -1,7 +1,8 @@
 import _ from "lodash";
 
 export const defaultState = {
-  lists: [],
+  publicLists: [],
+  privateLists: [],
   searchResult: []
 };
 

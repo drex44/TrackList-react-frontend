@@ -11,7 +11,6 @@ import {
   Modal,
   Form,
   TextArea,
-  Flag,
   Dropdown
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
@@ -19,10 +18,10 @@ import { Link } from "react-router-dom";
 import {
   Description,
   Title,
-  ProgressBar,
   PreventEnterSubmit,
   Tags,
-  ConfirmationModal
+  ConfirmationModal,
+  ProgressBar
 } from "./common";
 
 export class CList extends Component {
@@ -81,47 +80,42 @@ export class CList extends Component {
             <Tags value={list.tags} />
             {/* <Flag name="ae" /> */}
           </Grid.Column>
-          <Grid.Column width={2}>
-            <Link to={{ pathname: "/editList/" + list.id }}>
-              <Button
-                basic
-                floated="right"
-                icon="edit"
-                iconPosition="right"
-                content="Edit"
-              />
-            </Link>
-            {/* <Button
-              basic
-              floated="right"
-              icon="delete"
-              iconPosition="right"
-              content="Delete"
-              onClick={() => this.props.handleDeleteList(list.id)}
-            /> */}
-
-            {/* delete clist */}
-            {/* <ConfirmationModal
-              button={
+          {this.props.isPrivateList ? (
+            <Grid.Column width={2}>
+              {/* edit list */}
+              <Link to={{ pathname: "/editList/" + list.id }}>
                 <Button
                   basic
                   floated="right"
-                  icon="delete"
+                  icon="edit"
                   iconPosition="right"
-                  content="Delete"
+                  content="Edit"
                 />
-              }
-              confirmButtonText="Yes, delete"
-              message="are you sure, you want to delete this TrackList?"
-              action={this.props.handleDeleteList}
-              value={list.id}
-            /> */}
-          </Grid.Column>
+              </Link>
+
+              {/* delete list */}
+              <ConfirmationModal
+                button={
+                  <Button
+                    basic
+                    floated="right"
+                    icon="delete"
+                    iconPosition="right"
+                    content="Delete"
+                  />
+                }
+                confirmButtonText="Yes, delete"
+                message="are you sure, you want to delete this TrackList?"
+                action={this.props.handleDeleteList}
+                value={list.id}
+              />
+            </Grid.Column>
+          ) : null}
         </Grid>
         <Divider section />
 
         <Tasks
-          isUserList={this.props.isUserList}
+          isPrivateList={this.props.isPrivateList}
           newTaskLabel="Add new task"
           editable={this.props.editable}
           tasks={tasks}
@@ -130,7 +124,9 @@ export class CList extends Component {
         />
 
         <Divider hidden />
-        {/* <ProgressBar value={completedTasks} total={totaltasks} /> */}
+        {this.props.isPrivateList && totaltasks > 0 ? (
+          <ProgressBar value={completedTasks} total={totaltasks} />
+        ) : null}
       </div>
     );
   }
@@ -175,7 +171,7 @@ class Task extends Component {
 
     return (
       <Grid>
-        {this.props.isUserList ? (
+        {this.props.isPrivateList ? (
           <Grid.Column width={1}>
             <Checkbox
               type="checkbox"
@@ -215,7 +211,7 @@ class Tasks extends Component {
           <Grid.Column key={task.id.toString()}>
             <Segment color="green">
               <Task
-                isUserList={this.props.isUserList}
+                isPrivateList={this.props.isPrivateList}
                 editable={this.props.editable}
                 task={task}
                 handleDeleteTask={this.props.handleDeleteTask}
@@ -388,7 +384,12 @@ export class ListForm extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.list && props.list.tags && !state.title) {
+    if (
+      props.list &&
+      props.list.tags &&
+      props.id === props.list.id &&
+      !state.title
+    ) {
       const list = props.list;
       return {
         title: list.title,
@@ -402,7 +403,6 @@ export class ListForm extends Component {
   }
 
   handleTasksChange(event) {
-    // console.log(event)
     if (event.action === "updateStatus") {
       let tasks = this.state.tasks.map(task => {
         if (task.id === event.id) {

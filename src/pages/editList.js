@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Container, Segment, Header } from "semantic-ui-react";
 import { ListForm } from "../components/tasks";
-import { listOperations } from "../modules/lists";
+import { listsOperations } from "../modules/ducks/lists";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -10,14 +10,18 @@ export class EditList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Redirect: false
+      list: {}
     };
     this.handleEditListSubmit = this.handleEditListSubmit.bind(this);
   }
 
   async componentDidMount() {
-    this.props.clearSelectedList();
-    this.props.fetchList(this.props.match.params.id);
+    let response = await listsOperations.getListById(
+      this.props.match.params.id
+    );
+    console.log(response);
+
+    this.setState({ list: response });
   }
 
   async handleEditListSubmit(list) {
@@ -25,16 +29,16 @@ export class EditList extends Component {
     this.props.history.push("/");
   }
 
-  resetComponent = () => this.setState({ Redirect: false, id: "" });
-
   render() {
+    const list = this.state.list;
     return (
       <Container>
         <Header> Edit TrackList </Header>
         <Segment>
           <ListForm
             editable={true}
-            list={this.props.list}
+            list={list}
+            id={this.props.match.params.id}
             handleListSubmit={this.handleEditListSubmit}
           />
         </Segment>
@@ -45,14 +49,13 @@ export class EditList extends Component {
 
 const mapStateToProps = state => {
   return {
-    list: state.selectedList
+    // list: state.selectedList
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    editList: list => dispatch(listOperations.editList(list)),
-    fetchList: id => dispatch(listOperations.getListById(id)),
-    clearSelectedList: () => dispatch(listOperations.clearSelectedList())
+    editList: list => dispatch(listsOperations.editList(list)),
+    clearSelectedList: () => dispatch(listsOperations.clearSelectedList())
   };
 };
 export default withRouter(

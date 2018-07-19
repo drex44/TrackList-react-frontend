@@ -6,20 +6,19 @@ import {
   Menu,
   Button,
   Icon,
-  Label,
-  Dropdown,
   Responsive,
   Grid,
   Sidebar,
-  Header,
-  Image,
-  Divider
+  Divider,
+  Dropdown
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-
+import { connect } from "react-redux";
 import SearchBar from "./viewController/searchBar";
+import { LoginModal } from "./views/loginModal";
+import GoogleAuth from "./viewController/googleAuth";
 
-export class MainMenu extends Component {
+class MainMenu extends Component {
   state = { activeItem: "home" };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
@@ -45,6 +44,13 @@ export class MainMenu extends Component {
           onClick={this.handleItemClick}
         >
           <Link to="/newList">New List</Link>
+        </Menu.Item>
+        <Menu.Item
+          name="new list"
+          active={activeItem === "new list"}
+          onClick={this.handleItemClick}
+        >
+          Login
         </Menu.Item>
       </div>
     );
@@ -88,36 +94,62 @@ export class MainMenu extends Component {
           <SearchBar />
         </Menu.Item>
 
-        <Menu.Item
-          name="new list"
-          active={activeItem === "new list"}
-          onClick={this.handleItemClick}
-        >
-          <Link to="/newList">
-            <Button fluid basic animated="fade">
-              <Button.Content hidden>New List</Button.Content>
-              <Button.Content visible>
-                <Icon name="plus" />
-              </Button.Content>
-            </Button>
-          </Link>
-        </Menu.Item>
-        {/* <Menu.Menu position='right'>
-            <Menu.Item
-              name='my lists'
-              active={activeItem === 'my lists'}
-              onClick={this.handleItemClick}
-            />
-          <Dropdown text='Profile' pointing className='link item'>
+        {this.props.isLoggedIn ? (
+          <Menu.Item
+            name="new list"
+            active={activeItem === "new list"}
+            onClick={this.handleItemClick}
+          >
+            <Link to="/newList">
+              <Button fluid basic animated="fade">
+                <Button.Content hidden>New List</Button.Content>
+                <Button.Content visible>
+                  <Icon name="plus" />
+                </Button.Content>
+              </Button>
+            </Link>
+          </Menu.Item>
+        ) : null}
+
+        {this.props.isLoggedIn ? (
+          <Menu.Item
+            name="explore"
+            active={activeItem === "explore"}
+            onClick={this.handleItemClick}
+          >
+            <Link to="/explore">
+              <Button basic> My Lists </Button>
+            </Link>
+          </Menu.Item>
+        ) : null}
+
+        {!this.props.isLoggedIn ? (
+          <Menu.Item
+            name="login"
+            active={activeItem === "login"}
+            onClick={this.handleItemClick}
+          >
+            <LoginModal />
+          </Menu.Item>
+        ) : (
+          <Dropdown
+            text={this.props.profile.givenName}
+            pointing
+            className="link item"
+          >
             <Dropdown.Menu>
-              <Dropdown.Item>Profile</Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
+              <Link to="/profile">
+                <Dropdown.Item>Profile</Dropdown.Item>
+              </Link>
+              {/* <Dropdown.Item>Settings</Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Header>Other</Dropdown.Header>
-              <Dropdown.Item>Logout</Dropdown.Item>
+              <Dropdown.Header>Other</Dropdown.Header> */}
+              <Dropdown.Item>
+                <GoogleAuth button="logout" />
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          </Menu.Menu> */}
+        )}
       </Menu>
     );
     return (
@@ -191,3 +223,15 @@ export class MobileMenu extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    profile: state.profileReducer.profile,
+    isLoggedIn: state.profileReducer.isLoggedIn
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(MainMenu);

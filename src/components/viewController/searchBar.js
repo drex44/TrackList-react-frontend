@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { listOperations } from "../../modules/lists";
+import { listsOperations } from "../../modules/ducks/lists";
 import { connect } from "react-redux";
-import { SearchBar as SearchField } from "../views/searchBar";
+import SearchField from "../views/searchBar";
 
 class SearchBar extends Component {
   componentWillMount() {
@@ -24,13 +24,13 @@ class SearchBar extends Component {
 
 const mapStateToProps = state => {
   return {
-    searchResult: state.searchResult
+    searchResult: state.listsReducer.searchResult
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    searchLists: text => dispatch(listOperations.searchLists(text)),
-    clearSearch: () => dispatch(listOperations.clearSearchLists())
+    searchLists: text => dispatch(listsOperations.searchLists(text)),
+    clearSearch: () => dispatch(listsOperations.clearSearchLists())
   };
 };
 export default connect(

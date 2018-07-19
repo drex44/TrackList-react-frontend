@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Container, Segment, Header } from "semantic-ui-react";
 import { ListForm } from "../components/tasks";
-import { listOperations } from "../modules/lists";
+import { listsOperations } from "../modules/ducks/lists";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -42,7 +42,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    createList: list => dispatch(listOperations.createList(list))
+    createList: list => dispatch(listsOperations.createList(list))
   };
 };
 export default withRouter(

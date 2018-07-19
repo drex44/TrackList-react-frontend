@@ -1,37 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Container, Segment, Divider } from "semantic-ui-react";
 import { CList } from "../components/tasks";
 import { listsOperations } from "../modules/ducks/lists";
 import { connect } from "react-redux";
 
-class Home extends Component {
+export class PrivateHome extends React.Component {
   constructor(props) {
     super(props);
     this.handleDeleteList = this.handleDeleteList.bind(this);
   }
 
-  componentDidMount() {
-    this.updateLists();
+  async componentDidMount() {
+    this.props.getAllPrivateLists();
   }
-
-  updateLists = () => {
-    this.props.getAllPublicLists();
-  };
 
   async handleDeleteList(event) {
     this.props.deleteList(event);
   }
   render() {
-    const clists = this.props.publiclists ? this.props.publiclists : [];
-
+    const clists = this.props.lists ? this.props.lists : [];
     return clists.map(list => (
       <Container key={list.id}>
         <Segment>
           <CList
             list={list}
             editable={false}
-            isPrivateList={false}
+            isPrivateList={true}
             handleDeleteList={this.handleDeleteList}
           />
         </Segment>
@@ -43,15 +38,11 @@ class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    publiclists: state.listsReducer.publiclists,
-    privateLists: state.listsReducer.privateLists,
-    profile: state.profileReducer.profile,
-    isLoggedIn: state.profileReducer.isLoggedIn
+    lists: state.listsReducer.privateLists
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getAllPublicLists: () => dispatch(listsOperations.getAllPublicLists()),
     getAllPrivateLists: () => dispatch(listsOperations.getAllPrivateLists()),
     deleteList: id => dispatch(listsOperations.deleteList(id))
   };
@@ -59,4 +50,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home);
+)(PrivateHome);

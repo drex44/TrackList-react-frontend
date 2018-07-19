@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
 
+import { connect } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import Home from "./home";
+import PrivateHome from "./privateHome";
 import NewList from "./newList";
 import EditList from "./editList";
 import SearchResult from "./searchResult";
@@ -12,12 +14,22 @@ import { TermsAndConditions } from "../components/views/terms";
 import { AboutUs } from "../components/views/about";
 import { ContactUs } from "../components/views/contact";
 import { PrivacyPolicy } from "../components/views/privacy";
+import Profile from "../pages/profile";
 
-export class RouterBody extends Component {
+class RouterBody extends Component {
   render() {
     return (
       <Switch>
+        {/* {this.props.isLoggedIn ? (
+          <Route exact path="/" component={privateHome} />
+        ) : (
+          <Route exact path="/" component={Home} />
+        )} */}
+
         <Route exact path="/" component={Home} />
+
+        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/explore" component={PrivateHome} />
         <Route path="/newList" component={NewList} />
         <Route path="/editList/:id" component={EditList} />
         <Route path="/searchResult/:id" component={SearchResult} />
@@ -31,3 +43,5 @@ export class RouterBody extends Component {
     );
   }
 }
+
+export default RouterBody;

@@ -18,9 +18,8 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "true"],
-    "no-unused-vars": "off",
-    "no-extra-semi": "error"
-    // "react/jsx-uses-vars": 1,
-    // "react/react-in-jsx-scope": 1
+    "no-unused-vars": "error",
+    "react/jsx-uses-vars": 1,
+    "react/react-in-jsx-scope": 1
   }
 }
