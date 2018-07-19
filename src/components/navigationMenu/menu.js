@@ -14,9 +14,9 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import SearchBar from "./viewController/searchBar";
-import { LoginModal } from "./views/loginModal";
-import GoogleAuth from "./viewController/googleAuth";
+import SearchBar from "../searchBar";
+import { LoginModal } from "../authenticate";
+import GoogleAuth from "../googleAuth";
 
 class MainMenu extends Component {
   state = { activeItem: "home" };

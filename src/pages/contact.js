@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, List } from "semantic-ui-react";
-import { StyledIcon } from "../common";
+import { StyledIcon } from "../components/common";
 
 export function ContactUs(props) {
   return (

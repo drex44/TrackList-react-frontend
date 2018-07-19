@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-export class HelmetHead extends React.Component {
+class HelmetHead extends React.Component {
   render() {
     return (
       <Helmet>
@@ -24,3 +24,5 @@ export class HelmetHead extends React.Component {
     );
   }
 }
+
+export default HelmetHead;

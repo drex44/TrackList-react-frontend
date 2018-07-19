@@ -1,8 +1,8 @@
 import axios from "axios";
-import { config } from "../../config";
+import Config from "../../config";
 
 export const API = axios.create({
-  baseURL: config.API_ENDPOINT
+  baseURL: Config.API_ENDPOINT
 });
 
 export const Services = {

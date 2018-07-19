@@ -2,7 +2,7 @@ import React from "react";
 
 import "semantic-ui-css/semantic.min.css";
 import { Button, Modal } from "semantic-ui-react";
-import GoogleAuth from "../viewController/googleAuth";
+import GoogleAuth from "../googleAuth";
 
 export class LoginModal extends React.Component {
   constructor(props) {
@@ -10,28 +10,24 @@ export class LoginModal extends React.Component {
     this.state = {
       open: false
     };
-
-    this.close = this.close.bind(this);
-    this.open = this.open.bind(this);
-    this.handleTaskSubmit = this.handleTaskSubmit.bind(this);
   }
 
-  open(event) {
+  open = () => {
     this.setState({
       open: true
     });
-  }
+  };
 
-  close(event) {
+  close = () => {
     this.setState({
       open: false
     });
-  }
+  };
 
-  handleTaskSubmit(event) {
+  handleTaskSubmit = event => {
     this.props.handleTaskSubmit(event);
     this.close();
-  }
+  };
 
   render() {
     const button = this.props.button ? (

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Container, Segment } from "semantic-ui-react";
-import { CList } from "../components/tasks";
+import { TrackList } from "../components/lists";
 import { listsOperations } from "../modules/ducks/lists";
 import { connect } from "react-redux";
 
@@ -27,7 +27,7 @@ class SearchResult extends Component {
     return clists.map(list => (
       <Container>
         <Segment>
-          <CList
+          <TrackList
             list={list}
             editable={false}
             handleDeleteList={this.handleDeleteList}
@@ -38,9 +38,6 @@ class SearchResult extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {};
-};
 const mapDispatchToProps = dispatch => {
   return {
     getAllCList: () => dispatch(listsOperations.getAllLists()),
@@ -49,6 +46,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(SearchResult);

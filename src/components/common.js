@@ -10,7 +10,7 @@ export function Description(props) {
   return <div> {props.value} </div>;
 }
 export function Tags(props) {
-  return <div>{props.value.map(tag => <span>#{tag} </span>)}</div>;
+  return <div>{props.value.map(tag => <span key={tag}>#{tag} </span>)}</div>;
 }
 export function ProgressBar(props) {
   return (

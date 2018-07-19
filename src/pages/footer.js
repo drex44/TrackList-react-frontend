@@ -10,22 +10,22 @@ export class Footer extends Component {
       <Segment vertical style={{ padding: "5em 0em" }}>
         <Divider section />
         <Divider hidden />
-        <Container compact centered>
+        <Container>
           <Grid centered stackable>
             <List horizontal divided link>
-              <List.Item as="a">
+              <List.Item>
                 <Link to="/about-us"> About us </Link>
               </List.Item>
-              <List.Item as="a">
+              <List.Item>
                 <Link to="/contact-us"> Contact us </Link>
               </List.Item>
-              <List.Item as="a">
+              <List.Item>
                 <Link to="/terms-and-conditions"> Terms and Conditions </Link>
               </List.Item>
-              <List.Item as="a">
+              <List.Item>
                 <Link to="/privacy-policy"> Privacy Policy </Link>
               </List.Item>
-              <List.Item as="a">
+              <List.Item>
                 <Link to="/disclaimer-policy"> Disclaimer Policy </Link>
               </List.Item>
             </List>

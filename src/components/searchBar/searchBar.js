@@ -25,7 +25,7 @@ class SearchBar extends Component {
 
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent();
-      this.props.search(this.state.value);
+      this.props.searchLists(this.state.value);
       this.setState({
         isLoading: false
       });

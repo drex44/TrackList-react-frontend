@@ -1,7 +1,7 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Container, Segment, Divider } from "semantic-ui-react";
-import { CList } from "../components/tasks";
+import { TrackList } from "../components/lists";
 import { listsOperations } from "../modules/ducks/lists";
 import { connect } from "react-redux";
 
@@ -23,7 +23,7 @@ export class PrivateHome extends React.Component {
     return clists.map(list => (
       <Container key={list.id}>
         <Segment>
-          <CList
+          <TrackList
             list={list}
             editable={false}
             isPrivateList={true}

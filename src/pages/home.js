@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Container, Segment, Divider } from "semantic-ui-react";
-import { CList } from "../components/tasks";
+import { TrackList } from "../components/lists";
 import { listsOperations } from "../modules/ducks/lists";
 import { connect } from "react-redux";
 
@@ -23,12 +23,12 @@ class Home extends Component {
     this.props.deleteList(event);
   }
   render() {
-    const clists = this.props.publiclists ? this.props.publiclists : [];
+    const clists = this.props.publicLists ? this.props.publicLists : [];
 
     return clists.map(list => (
       <Container key={list.id}>
         <Segment>
-          <CList
+          <TrackList
             list={list}
             editable={false}
             isPrivateList={false}
@@ -43,7 +43,7 @@ class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    publiclists: state.listsReducer.publiclists,
+    publicLists: state.listsReducer.publicLists,
     privateLists: state.listsReducer.privateLists,
     profile: state.profileReducer.profile,
     isLoggedIn: state.profileReducer.isLoggedIn

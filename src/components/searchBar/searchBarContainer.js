@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { listsOperations } from "../../modules/ducks/lists";
 import { connect } from "react-redux";
-import SearchField from "../views/searchBar";
+import SearchField from "./searchBar";
 
 class SearchBar extends Component {
   componentWillMount() {
@@ -15,7 +15,7 @@ class SearchBar extends Component {
       <SearchField
         searchResult={this.props.searchResult}
         clearSearch={this.props.clearSearch}
-        search={this.props.searchLists}
+        searchLists={this.props.searchLists}
         input={{ icon: "search", iconPosition: "left" }}
       />
     );

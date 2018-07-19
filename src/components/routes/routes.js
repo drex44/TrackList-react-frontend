@@ -1,32 +1,29 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
 
-import { connect } from "react-redux";
 import { Switch, Route } from "react-router-dom";
-import Home from "./home";
-import PrivateHome from "./privateHome";
-import NewList from "./newList";
-import EditList from "./editList";
-import SearchResult from "./searchResult";
 
-import { DisclaimerPolicy } from "../components/views/disclaimer";
-import { TermsAndConditions } from "../components/views/terms";
-import { AboutUs } from "../components/views/about";
-import { ContactUs } from "../components/views/contact";
-import { PrivacyPolicy } from "../components/views/privacy";
-import Profile from "../pages/profile";
+import Home from "../../pages/home";
+import PrivateHome from "../../pages/privateHome";
+import NewList from "../../pages/newList";
+import EditList from "../../pages/editList";
+import SearchResult from "../../pages/searchResult";
+import { DisclaimerPolicy } from "../../pages/disclaimer";
+import { TermsAndConditions } from "../../pages/terms";
+import { AboutUs } from "../../pages/about";
+import { ContactUs } from "../../pages/contact";
+import { PrivacyPolicy } from "../../pages/privacy";
+import Profile from "../../pages/profile";
 
 class RouterBody extends Component {
   render() {
     return (
       <Switch>
-        {/* {this.props.isLoggedIn ? (
-          <Route exact path="/" component={privateHome} />
-        ) : (
-          <Route exact path="/" component={Home} />
-        )} */}
-
-        <Route exact path="/" component={Home} />
+        <Route
+          exact
+          path="/"
+          render={props => (props.isLoggedIn ? <PrivateHome /> : <Home />)}
+        />
 
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/explore" component={PrivateHome} />

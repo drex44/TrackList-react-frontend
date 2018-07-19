@@ -3,12 +3,12 @@ import "./App.css";
 
 import "semantic-ui-css/semantic.min.css";
 
-import MainMenu from "../components/menu";
-import RouterBody from "./routes";
-import { Footer } from "./footer";
-import { HelmetHead } from "../components/views/helmet";
+import MainMenu from "../../components/navigationMenu";
+import RouterBody from "../../components/routes";
+import { Footer } from "../footer";
+import Headers from "../../components/headers";
 import { Provider as ReduxProvider } from "react-redux";
-import configureStore from "../modules/store";
+import configureStore from "../../modules/store";
 
 const reduxStore = configureStore(window.REDUX_INITIAL_DATA);
 
@@ -17,7 +17,7 @@ class App extends Component {
     return (
       <ReduxProvider store={reduxStore}>
         <div className="App">
-          <HelmetHead />
+          <Headers />
           <MainMenu>
             <RouterBody />
           </MainMenu>

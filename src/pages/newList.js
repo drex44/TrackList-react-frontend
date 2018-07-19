@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Container, Segment, Header } from "semantic-ui-react";
-import { ListForm } from "../components/tasks";
+import { TrackListForm } from "../components/lists";
 import { listsOperations } from "../modules/ducks/lists";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -27,7 +27,7 @@ class NewList extends Component {
       <Container>
         <Header> Create new TrackList </Header>
         <Segment>
-          <ListForm
+          <TrackListForm
             editable={true}
             handleListSubmit={this.handleAddNewListSubmit}
           />

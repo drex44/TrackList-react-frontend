@@ -1,6 +1,6 @@
 import React from "react";
 import { profileOperations } from "../../modules/ducks/profile";
-import { Login, Logout } from "../views/googleAuth";
+import { Login, Logout } from "./googleAuth";
 import { connect } from "react-redux";
 
 class GoogleAuth extends React.Component {
@@ -13,7 +13,7 @@ class GoogleAuth extends React.Component {
     });
   };
 
-  handleLogout = response => {
+  handleLogout = () => {
     this.props.logout();
   };
 
