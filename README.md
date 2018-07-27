@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
@@ -2442,3 +2443,7 @@ In the future, we might start automatically compiling incompatible third-party m
 ## Something Missing?
 
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
+=======
+# tracklist-react-frontend
+React Frontend code of tracklist (side project)
+>>>>>>> 9a163ea1396f3a1c9d7eab2c12c054289173e7e0
