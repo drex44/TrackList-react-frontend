@@ -27,9 +27,9 @@ export function Logout(props) {
       buttonText="Logout"
       onLogoutSuccess={props.handleLogout}
       render={props => (
-        <Button basic onClick={props.onClick}>
+        <div basic onClick={props.onClick}>
           Logout
-        </Button>
+        </div>
       )}
     />
   );

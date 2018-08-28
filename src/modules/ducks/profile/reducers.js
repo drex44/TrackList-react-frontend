@@ -8,6 +8,7 @@ const profileReducer = (state = defaultState, action) => {
       newState.isLoggedIn = true;
       newState.profile = action.payload.profile;
       newState.sessionToken = action.payload.sessionToken;
+      localStorage.setItem("sessionToken", action.payload.sessionToken);
       return newState;
     }
 

@@ -7,7 +7,9 @@ import {
   Button,
   Form,
   TextArea,
-  Dropdown
+  Dropdown,
+  Checkbox,
+  Label
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
@@ -30,6 +32,11 @@ export class TrackList extends React.Component {
     };
     this.handleTasksChange = this.handleTasksChange.bind(this);
     this.handleNewTaskRequest = this.handleNewTaskRequest.bind(this);
+    this.addPublicListToUserList = this.addPublicListToUserList.bind(this);
+  }
+
+  addPublicListToUserList() {
+    this.props.addPublicListToUserList(this.props.list.id);
   }
 
   handleTasksChange(event) {
@@ -64,9 +71,9 @@ export class TrackList extends React.Component {
     const list = this.props.list;
 
     const tasks = this.state.tasks;
-    const totaltasks = tasks.length;
+    const totaltasks = tasks ? tasks.length : 0;
     let count = 0;
-    tasks.map(task => (task.status ? count++ : count));
+    tasks ? tasks.map(task => (task.status ? count++ : count)) : null;
     const completedTasks = count;
 
     return (
@@ -108,6 +115,15 @@ export class TrackList extends React.Component {
                 value={list.id}
               />
             </Grid.Column>
+          ) : this.props.isLoggedIn ? (
+            <Grid.Column width={2}>
+              <Button
+                basic
+                floated="right"
+                content="Add to my TrackLists"
+                onClick={this.addPublicListToUserList}
+              />
+            </Grid.Column>
           ) : null}
         </Grid>
         <Divider section />
@@ -139,7 +155,8 @@ export class TrackListForm extends React.Component {
       desc: "",
       tags: [],
       tagOptions: [],
-      tasks: []
+      tasks: [],
+      publiclist: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -162,7 +179,8 @@ export class TrackListForm extends React.Component {
         desc: list.description,
         tags: list.tags,
         tagOptions: list.tags.map(value => ({ text: value, value })),
-        tasks: list.tasks
+        tasks: list.tasks,
+        publiclist: list.publiclist
       };
     }
     return null;
@@ -230,10 +248,17 @@ export class TrackListForm extends React.Component {
     this.setState({ tasks: newArray });
   }
 
-  handleInputChange(event) {
+  handleInputChange(event, data) {
     const target = event.target;
-    const name = target.name;
+    let name = target.name;
     let value = target.value;
+
+    console.log(data);
+    if (data.name === "publiclist") {
+      name = data.name;
+      value = data.checked;
+    }
+
     if (name === "tags") {
       value = value.split(",");
     }
@@ -247,7 +272,8 @@ export class TrackListForm extends React.Component {
       title: this.state.title,
       description: this.state.desc,
       tags: this.state.tags,
-      tasks: this.state.tasks
+      tasks: this.state.tasks,
+      publiclist: this.state.publiclist
     };
     await this.props.handleListSubmit(list);
     event.preventDefault();
@@ -259,7 +285,8 @@ export class TrackListForm extends React.Component {
       desc: "",
       tags: [],
       tagOptions: [],
-      tasks: []
+      tasks: [],
+      publiclist: false
     });
     event.preventDefault();
   };
@@ -273,10 +300,8 @@ export class TrackListForm extends React.Component {
   handleTagsChange = (e, { value }) => this.setState({ tags: value });
 
   render() {
-    const title = this.state.title;
+    const { title, tasks, publiclist } = this.state;
     const description = this.state.desc;
-    const tasks = this.state.tasks;
-
     const currentValues = this.state.tags;
 
     return (
@@ -327,6 +352,24 @@ export class TrackListForm extends React.Component {
               handleTasksChange={this.handleTasksChange}
               handleNewTaskRequest={this.handleNewTaskRequest}
             />
+          </Form.Field>
+
+          <Form.Field>
+            <Checkbox
+              name="publiclist"
+              checked={publiclist}
+              onChange={this.handleInputChange}
+              label="Public checklist"
+            />
+            {publiclist && (
+              <div>
+                <Label>
+                  Once TrackList is public, it will be visible to everybody.
+                  even if you make it private again, only future changes won't
+                  be public.
+                </Label>
+              </div>
+            )}
           </Form.Field>
         </PreventEnterSubmit>
 

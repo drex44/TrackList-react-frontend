@@ -7,7 +7,7 @@ const getAllPublicLists = () => {
     let sessionToken = getState().profileReducer.sessionToken;
     let headers = prepareHeaders(sessionToken);
     API.post(Services.getAllPublicList, { headers: headers }).then(res => {
-      dispatch(actions.getAllPublicLists(res.data));
+      if (res.data != null) dispatch(actions.getAllPublicLists(res.data));
     });
   };
 };
@@ -25,9 +25,15 @@ const getAllPrivateLists = () => {
 };
 
 async function getListById(id) {
-  let response = await API.post(Services.getListById, {
-    id: id
-  }).then(res => {
+  let sessionToken = localStorage.getItem("sessionToken");
+  let headers = prepareHeaders(sessionToken);
+  let response = await API.post(
+    Services.getListById,
+    {
+      id: id
+    },
+    { headers: headers }
+  ).then(res => {
     return res.data;
   });
   return response;
@@ -94,6 +100,23 @@ const clearSearchLists = () => {
   };
 };
 
+const addPublicListToUserList = id => {
+  return function(dispatch, getState) {
+    let sessionToken = getState().profileReducer.sessionToken;
+    let headers = prepareHeaders(sessionToken);
+    console.log(Services);
+
+    API.post(
+      Services.addPublicListToUserList,
+      { listid: id },
+      { headers: headers }
+    ).then(res => {
+      let list = res.data;
+      dispatch(actions.createList(list));
+    });
+  };
+};
+
 export default {
   editList,
   deleteList,
@@ -103,5 +126,6 @@ export default {
   getListById,
   searchLists,
   clearSearchLists,
-  clearSelectedList
+  clearSelectedList,
+  addPublicListToUserList
 };

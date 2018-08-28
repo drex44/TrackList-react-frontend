@@ -6,14 +6,15 @@ export const API = axios.create({
 });
 
 export const Services = {
-  createNewList: "createList",
-  editList: "updateList",
   getAllPublicList: "getAllPublicList",
-  getListById: "getListById",
-  deleteList: "deleteList",
   searchLists: "search",
   authenticate: "authenticate",
-  getAllPrivateLists: "getAllPrivateLists"
+  createNewList: "user/createList",
+  editList: "user/updateList",
+  getListById: "user/getListById",
+  deleteList: "user/deleteList",
+  getAllPrivateLists: "user/getAllList",
+  addPublicListToUserList: "user/addPublicListToUserList"
 };
 
 export const prepareHeaders = sessionToken => {

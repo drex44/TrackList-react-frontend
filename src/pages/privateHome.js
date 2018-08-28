@@ -1,6 +1,7 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Container, Segment, Divider } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { Container, Segment, Divider, Header } from "semantic-ui-react";
 import { TrackList } from "../components/lists";
 import { listsOperations } from "../modules/ducks/lists";
 import { connect } from "react-redux";
@@ -20,19 +21,30 @@ export class PrivateHome extends React.Component {
   }
   render() {
     const clists = this.props.lists ? this.props.lists : [];
-    return clists.map(list => (
-      <Container key={list.id}>
-        <Segment>
-          <TrackList
-            list={list}
-            editable={false}
-            isPrivateList={true}
-            handleDeleteList={this.handleDeleteList}
-          />
-        </Segment>
-        <Divider hidden />
+    return clists.length > 0 ? (
+      clists.map(list => (
+        <Container key={list.id}>
+          <Segment>
+            <TrackList
+              list={list}
+              editable={false}
+              isPrivateList={true}
+              handleDeleteList={this.handleDeleteList}
+            />
+          </Segment>
+          <Divider hidden />
+        </Container>
+      ))
+    ) : (
+      <Container textAlign="center">
+      <Divider hidden />
+        <Header>
+          No TrackList available.
+          <br />Please create a new one
+          <Link to="/newList"> here</Link>.
+        </Header>
       </Container>
-    ));
+    );
   }
 }
 

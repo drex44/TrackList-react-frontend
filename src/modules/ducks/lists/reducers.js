@@ -46,6 +46,7 @@ const listReducer = (state = defaultState, action) => {
 
       let privateLists = _.cloneDeep(state.privateLists);
       let index2 = findListIndexFromId(privateLists, action.payload);
+      console.log(index2);
       privateLists.splice(index2, 1);
 
       let newState = _.cloneDeep(state);

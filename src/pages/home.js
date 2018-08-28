@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Container, Segment, Divider } from "semantic-ui-react";
+import { Container, Segment, Divider, Header } from "semantic-ui-react";
 import { TrackList } from "../components/lists";
 import { listsOperations } from "../modules/ducks/lists";
 import { connect } from "react-redux";
@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.handleDeleteList = this.handleDeleteList.bind(this);
   }
 
   componentDidMount() {
@@ -19,25 +18,34 @@ class Home extends Component {
     this.props.getAllPublicLists();
   };
 
-  async handleDeleteList(event) {
-    this.props.deleteList(event);
-  }
+  addPublicListToUserList = lisId => {
+    this.props.addPublicListToUserList(lisId);
+  };
+
   render() {
     const clists = this.props.publicLists ? this.props.publicLists : [];
 
-    return clists.map(list => (
-      <Container key={list.id}>
-        <Segment>
-          <TrackList
-            list={list}
-            editable={false}
-            isPrivateList={false}
-            handleDeleteList={this.handleDeleteList}
-          />
-        </Segment>
+    return clists.length > 0 ? (
+      clists.map(list => (
+        <Container key={list.id}>
+          <Segment>
+            <TrackList
+              list={list}
+              editable={false}
+              isPrivateList={false}
+              isLoggedIn={this.props.isLoggedIn}
+              addPublicListToUserList={this.addPublicListToUserList}
+            />
+          </Segment>
+          <Divider hidden />
+        </Container>
+      ))
+    ) : (
+      <Container textAlign="center">
         <Divider hidden />
+        <Header> No Public TrackList available</Header>
       </Container>
-    ));
+    );
   }
 }
 
@@ -53,7 +61,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getAllPublicLists: () => dispatch(listsOperations.getAllPublicLists()),
     getAllPrivateLists: () => dispatch(listsOperations.getAllPrivateLists()),
-    deleteList: id => dispatch(listsOperations.deleteList(id))
+    deleteList: id => dispatch(listsOperations.deleteList(id)),
+    addPublicListToUserList: id =>
+      dispatch(listsOperations.addPublicListToUserList(id))
   };
 };
 export default connect(

@@ -18,19 +18,20 @@ import { TaskContainer } from "./tasksContainer";
 export function Tasks(props) {
   return (
     <Grid container columns={1} doubling stackable>
-      {props.tasks.map(task => (
-        <Grid.Column key={task.id.toString()}>
-          <Segment color="green">
-            <TaskContainer
-              isPrivateList={props.isPrivateList}
-              editable={props.editable}
-              task={task}
-              handleDeleteTask={props.handleDeleteTask}
-              handleTasksChange={props.handleTasksChange}
-            />
-          </Segment>
-        </Grid.Column>
-      ))}
+      {props.tasks &&
+        props.tasks.map(task => (
+          <Grid.Column key={task.id.toString()}>
+            <Segment color="green">
+              <TaskContainer
+                isPrivateList={props.isPrivateList}
+                editable={props.editable}
+                task={task}
+                handleDeleteTask={props.handleDeleteTask}
+                handleTasksChange={props.handleTasksChange}
+              />
+            </Segment>
+          </Grid.Column>
+        ))}
       {props.editable ? (
         <Grid.Column>
           <Segment>

@@ -132,23 +132,25 @@ class MainMenu extends Component {
             <LoginModal />
           </Menu.Item>
         ) : (
-          <Dropdown
-            text={this.props.profile.givenName}
-            pointing
-            className="link item"
-          >
-            <Dropdown.Menu>
-              <Link to="/profile">
-                <Dropdown.Item>Profile</Dropdown.Item>
-              </Link>
-              {/* <Dropdown.Item>Settings</Dropdown.Item>
+          <Menu.Item>
+            <Dropdown
+              text={this.props.profile.givenName}
+              pointing
+              className="button basic"
+            >
+              <Dropdown.Menu>
+                <Link to="/profile">
+                  <Dropdown.Item>Profile</Dropdown.Item>
+                </Link>
+                {/* <Dropdown.Item>Settings</Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Header>Other</Dropdown.Header> */}
-              <Dropdown.Item>
-                <GoogleAuth button="logout" />
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+                <Dropdown.Item>
+                  <GoogleAuth button="logout" />
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Item>
         )}
       </Menu>
     );

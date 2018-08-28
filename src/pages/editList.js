@@ -19,14 +19,12 @@ export class EditList extends Component {
     let response = await listsOperations.getListById(
       this.props.match.params.id
     );
-    console.log(response);
-
     this.setState({ list: response });
   }
 
   async handleEditListSubmit(list) {
     this.props.editList(list);
-    this.props.history.push("/");
+    this.props.history.push("/explore");
   }
 
   render() {

@@ -17,7 +17,7 @@ class NewList extends Component {
 
   async handleAddNewListSubmit(list) {
     this.props.createList(list);
-    this.props.history.push("/");
+    this.props.history.push("/explore");
   }
 
   resetComponent = () => this.setState({ Redirect: false, id: "" });

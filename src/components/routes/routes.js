@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
 
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import Home from "../../pages/home";
 import PrivateHome from "../../pages/privateHome";
@@ -24,12 +24,29 @@ class RouterBody extends Component {
           path="/"
           render={props => (props.isLoggedIn ? <PrivateHome /> : <Home />)}
         />
-
         <Route exact path="/profile" component={Profile} />
-        <Route exact path="/explore" component={PrivateHome} />
-        <Route path="/newList" component={NewList} />
-        <Route path="/editList/:id" component={EditList} />
         <Route path="/searchResult/:id" component={SearchResult} />
+        {/* <Route exact path="/explore" component={PrivateHome} />
+        <Route path="/newList" component={NewList} />
+        <Route path="/editList/:id" component={EditList} /> */}
+
+        {/* Restricted Routes */}
+        <PrivateRoute
+          isLoggedIn={this.props.isLoggedIn}
+          exact
+          path="/explore"
+          component={PrivateHome}
+        />
+        <PrivateRoute
+          isLoggedIn={this.props.isLoggedIn}
+          path="/newList"
+          component={NewList}
+        />
+        <PrivateRoute
+          isLoggedIn={this.props.isLoggedIn}
+          path="/editList/:id"
+          component={EditList}
+        />
 
         <Route path="/disclaimer-policy" component={DisclaimerPolicy} />
         <Route path="/terms-and-conditions" component={TermsAndConditions} />
@@ -40,5 +57,23 @@ class RouterBody extends Component {
     );
   }
 }
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      props.isLoggedIn === true ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/",
+            state: { from: props.location }
+          }}
+        />
+      )
+    }
+  />
+);
 
 export default RouterBody;
