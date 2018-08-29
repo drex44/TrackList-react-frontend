@@ -253,8 +253,7 @@ export class TrackListForm extends React.Component {
     let name = target.name;
     let value = target.value;
 
-    console.log(data);
-    if (data.name === "publiclist") {
+    if (typeof data != "undefined" && data.name === "publiclist") {
       name = data.name;
       value = data.checked;
     }

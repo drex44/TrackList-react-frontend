@@ -2,7 +2,6 @@
   "name": "clist-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://drex44.github.io/tracklist/",
   "dependencies": {
     "axios": "^0.18.0",
     "lodash": "^4.17.10",
@@ -12,7 +11,7 @@
     "react-helmet": "^5.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4",
+    "react-scripts": "^1.1.5",
     "redux-devtools-extension": "^2.13.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
@@ -27,7 +26,7 @@
     "storybook": "start-storybook -p 9001 -c .storybook",
     "build-storybook": "build-storybook -s public",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "mv build/index.html build/200.html && surge --project ./build/ --domain tracklist-alpha.surge.sh"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.7",
@@ -39,7 +38,14 @@
     "eslint": "^5.0.1",
     "eslint-plugin-react": "^7.10.0",
     "flow-bin": "^0.75.0",
-    "gh-pages": "^1.2.0",
-    "prettier-eslint": "^8.8.2"
+    "git-scripts": "^0.2.1",
+    "prettier-eslint": "^8.8.2",
+    "surge": "^0.20.1"
+  },
+  "git": {
+    "scripts": {
+      "post-commit": "npm run deploy",
+      "pre-push": "npm run deploy"
+    }
   }
 }

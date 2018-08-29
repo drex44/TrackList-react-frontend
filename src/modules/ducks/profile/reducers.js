@@ -1,5 +1,6 @@
 import types from "./types";
 import { defaultState } from "./utils";
+import { AuthStatus } from "../../../components/authenticate";
 
 const profileReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -9,6 +10,7 @@ const profileReducer = (state = defaultState, action) => {
       newState.profile = action.payload.profile;
       newState.sessionToken = action.payload.sessionToken;
       localStorage.setItem("sessionToken", action.payload.sessionToken);
+      AuthStatus.changeAuthStatus(true);
       return newState;
     }
 
@@ -16,6 +18,7 @@ const profileReducer = (state = defaultState, action) => {
       let newState = { ...state };
       newState.isLoggedIn = false;
       newState.profile = {};
+      AuthStatus.changeAuthStatus(false);
       return newState;
     }
 
