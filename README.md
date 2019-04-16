@@ -1,5 +1,7 @@
 # tracklist-react-frontend
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/drex44/TrackList-react-frontend.svg)](https://greenkeeper.io/)
+
 React Frontend code of tracklist (side project)
 
 Backend for this app can be found at [tracklist-go-backend](https://github.com/drex44/tracklist-go-backend)
